@@ -246,7 +246,7 @@
             </div>
             <div class="footer mt-3 text-center">
                 <input type="Submit" class="btn btn-success" value="Update" name="update">
-                <input type="Button" class="btn btn-danger" value="Back" onClick="history.back()">
+                <input type="Button" class="btn btn-danger" value="Close" onClick="window.close()">
             </div>
         </form>
     </div>
@@ -439,10 +439,10 @@
     $run1=mysqli_query($con,$upquery);
 
     if ($run1) {
-        echo "<script>confirm('Record updated'); window.location='view-students.php';</script>";
+        echo "<script>confirm('Record updated');</script>";
     }
     else {
-        echo "<script>alert('Record not updated'); window.location='view-students.php';</script>";
+        echo "<script>alert('Record not updated');</script>";
     }
 }
 ?>

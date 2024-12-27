@@ -15,31 +15,43 @@
 					<li class="nav-item">
 						<a class="nav-link" href="../faculty/faculty-info.php">
 						<span data-feather="file"></span>
-						<i class="fa fa-user mr-2" aria-hidden="true"></i> Personal Profile
+						<i class="fa fa-user-circle mr-2" aria-hidden="true"></i> Personal Profile
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="../faculty/add-student.php">
 						<span data-feather="file"></span>
-						<i class="fa fa-user mr-2" aria-hidden="true"></i> Student Registration
+						<i class="fa fa-user-plus mr-2" aria-hidden="true"></i> Batch Registration
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../faculty/view-students.php">
+						<a class="nav-link" href="../faculty/view-students-data.php">
 						<span data-feather="file"></span>
-						<i class="fa fa-users mr-2" aria-hidden="true"></i> Students
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="../faculty/view-placements.php">
-						<span data-feather="shopping-cart"></span>
-						<i class="fa fa-book mr-2" aria-hidden="true"></i> Placements
+						<i class="fa fa-users mr-2" aria-hidden="true"></i> View Students Data
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="../faculty/update-marks.php">
 						<span data-feather="shopping-cart"></span>
-						<i class="fa fa-database mr-2" aria-hidden="true"></i> Update CGPA
+						<i class="fa fa-database mr-2" aria-hidden="true"></i> Update Student Data
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../faculty/view-applicants.php">
+						<span data-feather="shopping-cart"></span>
+						<i class="fa fa-bars mr-2" aria-hidden="true"></i> View Drive Applicants
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../faculty/view-coordinators.php">
+						<span data-feather="shopping-cart"></span>
+						<i class="fa fa-list mr-2" aria-hidden="true"></i> View Coordinators
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../faculty/placement-statistics.php">
+						<span data-feather="shopping-cart"></span>
+						<i class="fa fa-bar-chart mr-2" aria-hidden="true"></i> View Placements
 						</a>
 					</li>
 					<li class="nav-item">

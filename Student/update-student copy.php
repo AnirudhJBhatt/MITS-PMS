@@ -192,7 +192,6 @@
                 <div class="col">
                     <label>Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Name']; ?>" name="Stud_Name">
-                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Date of Birth</label>
@@ -210,12 +209,10 @@
                 <div class="col">
                     <label>Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mob']; ?>" name="Stud_Mob">
-                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Email</label>
                     <input type="email" class="form-control" value= "<?php echo $row['Stud_Email']; ?>" name="Stud_Email">
-                    <div class="error text-danger"></div>
                 </div>                       
                 <div class="col">
                     <label>Address</label>
@@ -248,7 +245,6 @@
                 <div class="col">
                     <label>Student ID Proof No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_ID_No']; ?>" name="Stud_ID_No">
-                    <div class="error text-danger"></div>
                 </div>
             </div>
             <div class="row"> 
@@ -266,7 +262,6 @@
                 <div class="col">
                     <label>Father's Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Father_Name']; ?>" name="Stud_Father_Name">
-                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Father's Occupation</label>
@@ -275,14 +270,12 @@
                 <div class="col">
                     <label>Father's Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Father_No']; ?>" name="Stud_Father_No">
-                    <div class="error text-danger"></div>
                 </div>
             </div>            
             <div class="row">
                 <div class="col">
                     <label>Mother's Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mother_Name']; ?>" name="Stud_Mother_Name">
-                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Mother's Occupation</label>
@@ -291,14 +284,12 @@
                 <div class="col">
                     <label>Mother's Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mother_No']; ?>" name="Stud_Mother_No">
-                    <div class="error text-danger"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <label>Guardian Email</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Guardian_Email']; ?>" name="Guardian_Email">
-                    <div class="error text-danger"></div>
                 </div>
                 <div class="col-sm-4">
                     <label>Annual Income</label>
@@ -404,61 +395,52 @@
         }
 
         function validateForm() {
-            // Clear previous error messages
-            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+			const form = document.getElementById("studregform");
 
-            let isValid = true;
+			// Validate all name fields
+			const nameFields = ["Stud_Name", "Stud_Father_Name", "Stud_Mother_Name"];
+			for (let field of nameFields) {
+				let name = form[field].value;
+				if (!/^[A-Za-z\s-]+$/.test(name)) {
+					alert("Names should only contain alphabets");
+					return false;
+				}
+			}
 
-            // Name Validation
-            const nameFields = ["Stud_Name", "Stud_Father_Name", "Stud_Mother_Name"];
-            for (let field of nameFields) {
-                let inputField = document.querySelector(`input[name="${field}"]`);
-                let name = inputField.value.trim();
-                if (!/^[A-Za-z\s-]+$/.test(name)) {
-                    showError(inputField, "Please enter a valid name.");
-                    isValid = false;
-                }
-            }
+			// Validate Mobile Numbers
+			const mobileFields = ["Stud_Mob", "Stud_Father_No", "Stud_Mother_No"];
+			for (let field of mobileFields) {
+				let mobile = form[field].value;
+				if (!/^\d{10}$/.test(mobile)) {
+					alert("Please enter a valid 10-digit mobile number.");
+					return false;
+				}
+			}
 
-            // Mobile Validation
-            const phoneFields = ["Stud_Mob", "Stud_Father_No", "Stud_Mother_No"];
-            for (let field of phoneFields) {
-                let inputField = document.querySelector(`input[name="${field}"]`);
-                let phone = inputField.value.trim();
-                if (!/^[6-9]\d{9}$/.test(phone)) {
-                    showError(inputField, "Please enter a valid 10-digit mobile number");
-                    isValid = false;
-                }
-            }
+			// Validate Email
+			let email = form["Stud_Email"].value;
+			let emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+			if (!emailPattern.test(email)) {
+				alert("Please enter a valid email address.");
+				return false;
+			}
 
-            // Email Validation
-            const emailFields = ["Stud_Email", "Guardian_Email"];
-            for (let field of emailFields) {
-                let inputField = document.querySelector(`input[name="${field}"]`);
-                let email = inputField.value.trim();
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    showError(inputField, "Please enter a valid email address.");
-                    isValid = false;
-                }
-            }
-        
-            // Aadhaar Validation
-            let aadhaarField = document.querySelector(`input[name="Stud_ID_No"]`);
-            let aadhaar = aadhaarField.value.trim();
-            if (!/^\d{12}$/.test(aadhaar)) {
-                showError(aadhaarField, "Please enter a valid 12-digit Aadhaar Number.");
-                isValid = false;
-            }
+			// Validate Aadhaar Number (12 digits)
+			let aadhaar = form["Stud_ID_No"].value;
+			if (!/^\d{12}$/.test(aadhaar)) {
+				alert("Please enter a valid 12-digit Aadhaar Number.");
+				return false;
+			}
 
-            return isValid; // Form submission only if all validations pass
-        }
+			// Validate CGPA
+			let cgpa = form["CGPA"].value;
+			if (!/^(10|[0-9](\.\d{1,2})?)$/.test(cgpa)) {
+				alert("Please enter a valid CGPA between 0 and 10.");
+				return false;
+			}
 
-        function showError(field, message) {
-            const errorDiv = field.nextElementSibling;
-            if (errorDiv && errorDiv.classList.contains('error')) {
-                errorDiv.textContent = message;
-            }
-        }   
+			return true;
+		}
     </script>
 </body>
 </html>

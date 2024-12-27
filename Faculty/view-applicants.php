@@ -76,7 +76,7 @@
 									<select class="form-control" name="D_ID">
 										<option>Select Drive</option>
 										<?php
-											$query="SELECT * from drive";
+											$query="SELECT * FROM `drive` WHERE branch LIKE '%$Fac_Dept%';";
 											$run=mysqli_query($con,$query);
 											while($row=mysqli_fetch_array($run)) {
 												echo"<option value=".$row['D_ID'].">".$row['D_Name']."</option>";
@@ -90,7 +90,7 @@
 						</div>
 					</form>				
 				</section>
-				<?php 
+				<?php
 					if(isset($_REQUEST['Search'])){
 						$D_ID=$_POST['D_ID'];
 				?>
@@ -166,7 +166,7 @@
 					</section>
 				<?php				
 					}
-					if(isset($_REQUEST['View'])){
+					else if(isset($_REQUEST['View'])){
 						$D_ID=$_POST['D_ID'];
 						$i=1;
 				?>
@@ -246,6 +246,76 @@
 							</table>				
 						</section>
 					
+				<?php
+					}
+					else{
+				?>
+						<section class="my-3">
+							<table class="w-100 table-elements table-three-tr text-center" cellpadding="10">
+								<tr class="table-tr-head table-three text-white">
+									<th>Drive ID</th>
+									<th>Drive Name</th>
+									<th>Comapany</th>
+									<th>Batch</th>
+									<th>Branch</th>
+									<th>10th</th>
+									<th>12th</th>
+									<th>UG</th>
+									<th>CGPA</th>
+									<th>Backlogs</th>
+									<th>Pack</th>
+									<th>Last Date</th>
+									<th>Eligible Students</th>
+									<th>Applied Students</th>
+								</tr>
+								<?php
+									$query="SELECT 
+												d.*, c.*,
+												COUNT(DISTINCT s.Stud_ID) AS Stud_Count,
+												COUNT(DISTINCT a.App_ID) AS App_Count
+											FROM 
+												drive d
+											LEFT JOIN student s 
+												ON FIND_IN_SET(s.Stud_Course, d.Course) > 0 
+												AND FIND_IN_SET(s.Stud_Batch, d.Branch) > 0 
+												AND d.Year = s.Stud_Year 
+												AND d.Marks_10th <= s.Marks_10th 
+												AND d.Marks_12th <= s.Marks_12th 
+												AND (s.Marks_UG <= 0 OR d.Marks_UG <= s.Marks_UG) 
+												AND d.CGPA <= s.CGPA 
+												AND d.Backlogs <= s.Stud_Backlogs 
+												AND d.D_Package <= s.Stud_Package
+											LEFT JOIN application a 
+												ON a.D_ID = d.D_ID
+											LEFT JOIN company c ON
+												c.C_ID = d.C_ID
+											WHERE 
+												s.Stud_Batch = '$Fac_Dept'
+											GROUP BY d.D_ID";
+									$pack=array("0"=>"Low","1"=>"Medium","2"=>"High");
+									$run=mysqli_query($con,$query);
+									while($row=mysqli_fetch_array($run)) {
+										$D_ID=$row['D_ID'];
+										echo "<tr>";
+										echo "<td>".$row['D_ID']."</td>";
+										echo "<td>".$row['D_Name']."</td>";
+										echo "<td>".$row['C_Name']."</td>";
+										echo "<td>".$row['Year']."</td>";
+										echo "<td>".$row['Branch']."</td>";
+										echo "<td>".$row['Marks_10th']."</td>";
+										echo "<td>".$row['Marks_12th']."</td>";
+										echo "<td>".$row['Marks_UG']."</td>";
+										echo "<td>".$row['CGPA']."</td>";
+										echo "<td>".$row['Backlogs']."</td>";
+										echo "<td>".$pack[$row['D_Package']]."</td>";
+										echo "<td>".$row['D_Date']."</td>";
+										echo "<td>".$row['Stud_Count']."</td>";
+										echo "<td>".$row['App_Count']."</td>";
+										echo "</tr>";
+									}
+								?>
+							</table>				
+						</section>
 				<?php
 					}
 				?>

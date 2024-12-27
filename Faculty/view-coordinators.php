@@ -31,6 +31,7 @@
 						<section class="mt-3">							
 							<table class="w-100 table-elements mb-5 table-three-tr" cellpadding="10">
 								<tr class="table-tr-head table-three text-white">
+									<th class="w-20">SL. No</th>
 									<th class="w-20">Faculty ID</th>
 									<th class="w-20">Name</th>
 									<th class="w-20">Department</th>
@@ -40,8 +41,10 @@
 								<?php 
 									$query = "SELECT * FROM `faculty`"; 
 									$run=mysqli_query($con,$query);
+									$i=1;
 									while($row=mysqli_fetch_array($run)) {
 										echo "<tr>";
+											echo "<td>".$i++."</td>";
 											echo "<td>".$row["Fac_ID"]."</td>";
 											echo "<td>".$row["Fac_Name"]."</td>";
 											echo "<td>".$row["Fac_Dept"]."</td>";

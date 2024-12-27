@@ -109,8 +109,11 @@
             <div class="row"> 
                 <div class="col">
                     <label>Gender</label>
-                    <input type="text" class="form-control" value = "<?php echo $row['Fac_Gender'] ?>" name="Fac_Gender">
-                </div>                       
+                    <select class="form-control" name="Fac_Gender">
+                        <option value="Male" <?php echo ($row['Fac_Gender'] == "Male") ? 'selected' : ''; ?>>Male</option>
+                        <option value="Female" <?php echo ($row['Fac_Gender'] == "Female") ? 'selected' : ''; ?>>Female</option>
+                    </select>    
+                </div>
                 <div class="col-sm-4">
                     <label>Address</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Fac_Address']; ?>" name="Fac_Address">

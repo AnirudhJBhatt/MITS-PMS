@@ -84,7 +84,7 @@
                 </div>                        
             </div>
             <div class='footer text-center mb-3'>
-                <a class='btn btn-danger' href="javascript: history.back()">Close</a>
+                <a class='btn btn-danger' href="javascript: window.close()">Close</a>
             </div>	
         </div>
 	</body>

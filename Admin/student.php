@@ -96,194 +96,250 @@
 						data-target=".bd-example-modal2-lg">Add Faculty</button>
 				</div>
 			</div>
-			<div class="col-md-2 pt-3 w-100">
-				<div class="modal fade bd-example-modal1-lg" tabindex="-1" role="dialog"
-					aria-labelledby="myLargeModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<div class="modal-header bg-info text-white">
-								<h4 class="modal-title text-center">Add New Student</h4>
+			<section class="mt-3">
+				<label>
+						<h5>Faculty Search</h5>
+				</label>
+				<form action="" method="post">
+					<div class="row">
+						<div class="col-5">
+							<div class="input-group">
+								<input type="text" name="Fac_Name" class="form-control" placeholder="Enter Faculty Name">
+								<input type="submit" class="btn btn-primary px-4 ml-4" name="Search" value="Search">
 							</div>
-							<div class="modal-body">
-								<form id="studentForm" action="student.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-									<h5>Student Details</h5>
-									<div class="row mt-3">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Admission No:*</label>
-												<input type="text" name="Stud_ID" class="form-control" required>
+						</div>			
+					</div>	
+				</form>				
+			</section>
+			<div class="row w-100">
+				<div class=" col-lg-6 col-md-6 col-sm-12 mt-1 ">
+					<div class="modal fade bd-example-modal1-lg" tabindex="-1" role="dialog"
+						aria-labelledby="myLargeModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header bg-info text-white">
+									<h4 class="modal-title text-center">Add New Student</h4>
+								</div>
+								<div class="modal-body">
+									<form id="studentForm" action="student.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+										<h5>Student Details</h5>
+										<div class="row mt-3">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Admission No:*</label>
+													<input type="text" name="Stud_ID" class="form-control" required>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Name:*</label>
+													<input type="text" name="Stud_Name" class="form-control" required>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Date of Birth: </label>
+													<input type="date" name="Stud_DOB" class="form-control" required>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Name:*</label>
-												<input type="text" name="Stud_Name" class="form-control" required>
+										
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Course:</label>
+													<select class="browser-default custom-select" name="Stud_Course" required id="Stud_Course" onchange="addfield()">
+														<option>Select Course</option>
+														<option value="B.Tech">B.Tech</option>
+														<option value="M.Tech">M.Tech</option>
+														<option value="MCA">MCA</option>													
+													</select>
+												</div>
 											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Branch:</label>
+													<select class="browser-default custom-select" name="Stud_Batch" required>
+														<option>Select Branch</option>
+														<option value="CS">CS</option>
+														<option value="CS-AI">CS-AI</option>
+														<option value="AI&DS">AI&DS</option>
+														<option value="CS-CY">CS-CY</option>
+														<option value="ME">ME</option>
+														<option value="CE">CE</option>
+														<option value="EEE">EEE</option>
+														<option value="ECE">ECE</option>	
+														<option value="Computer Applications">Computer Applications</option>													
+													</select>
+												</div>
+											</div>										
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Batch:</label>
+													<select class="browser-default custom-select" name="Stud_Year" required>
+														<option>Select Batch</option>
+														<option value="I">I</option>
+														<option value="II">II</option>
+														<option value="III">III</option>
+														<option value="IV">IV</option>
+														<option value="V">V</option>
+														<option value="VI">VI</option>
+														<option value="VII">VII</option>
+														<option value="VIII">VIII</option>												
+													</select>
+												</div>
+											</div>										
 										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Date of Birth: </label>
-												<input type="date" name="Stud_DOB" class="form-control" required>
-											</div>
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-primary" name="add-student" value="Add Student">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Course:</label>
-												<select class="browser-default custom-select" name="Stud_Course" required id="Stud_Course" onchange="addfield()">
-													<option>Select Course</option>
-													<option value="B.Tech">B.Tech</option>
-													<option value="M.Tech">M.Tech</option>
-													<option value="MCA">MCA</option>													
-												</select>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Batch:</label>
-												<select class="browser-default custom-select" name="Stud_Batch" required>
-													<option>Select Batch</option>
-													<option value="CS">CS</option>
-													<option value="CS-AI">CS-AI</option>
-													<option value="AI&DS">AI&DS</option>
-													<option value="CS-CY">CS-CY</option>
-													<option value="ME">ME</option>
-													<option value="CE">CE</option>
-													<option value="EEE">EEE</option>
-													<option value="ECE">ECE</option>	
-													<option value="Computer Applications">Computer Applications</option>													
-												</select>
-											</div>
-										</div>										
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Semester:</label>
-												<select class="browser-default custom-select" name="Stud_Year" required>
-													<option>Select Semester</option>
-													<option value="I">I</option>
-													<option value="II">II</option>
-													<option value="III">III</option>
-													<option value="IV">IV</option>
-													<option value="V">V</option>
-													<option value="VI">VI</option>
-													<option value="VII">VII</option>
-													<option value="VIII">VIII</option>												
-												</select>
-											</div>
-										</div>										
-									</div>
-									<div class="modal-footer">
-										<input type="submit" class="btn btn-primary" name="add-student" value="Add Student">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2 pt-3 w-100">
-				<div class="modal fade bd-example-modal2-lg" tabindex="-1" role="dialog" 
-					aria-labelledby="myLargeModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<div class="modal-header bg-info text-white">
-								<h4 class="modal-title text-center">Add Faculty Coordinator</h4>
-							</div>
-							<div class="modal-body">
-								<form id="studentForm" action="student.php" method="POST" enctype="multipart/form-data">
-									<h5>Faculty Details</h5>
-									<div class="row mt-3">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Faculty ID:</label>
-												<input type="text" name="Fac_ID" class="form-control" required>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Name:*</label>
-												<input type="text" name="Fac_Name" class="form-control" required>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Date of Birth: </label>
-												<input type="date" name="Fac_DOB" class="form-control" required>
-											</div>
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label>Department   :</label>
-												<select class="browser-default custom-select" name="Fac_Dept">
-													<option>Select Department</option>
-													<option value="CS-AI">CS-AI</option>
-													<option value="AI&DS">AI&DS</option>
-													<option value="CS">CS</option>
-													<option value="CS-CY">CS-CY</option>
-													<option value="ME">ME</option>
-													<option value="CE">CE</option>
-													<option value="ECE">ECE</option>
-													<option value="EEE">EEE</option>
-													<option value="MCA">MCA</option>													
-												</select>
-											</div>
-										</div>										
-									</div>
-									<div class="modal-footer">
-										<input type="submit" class="btn btn-primary" name="add-faculty" value="Add Faculty">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									</div>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12 container-fluid">
-					<section class="mt-3">						
+			<div class="row w-100">
+				<div class=" col-lg-6 col-md-6 col-sm-12 mt-1 ">
+					<div class="modal fade bd-example-modal2-lg" tabindex="-1" role="dialog" 
+						aria-labelledby="myLargeModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header bg-info text-white">
+									<h4 class="modal-title text-center">Add Faculty Coordinator</h4>
+								</div>
+								<div class="modal-body">
+									<form id="studentForm" action="student.php" method="POST" enctype="multipart/form-data">
+										<h5>Faculty Details</h5>
+										<div class="row mt-3">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Faculty ID:</label>
+													<input type="text" name="Fac_ID" class="form-control" required>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Name:*</label>
+													<input type="text" name="Fac_Name" class="form-control" required>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Date of Birth: </label>
+													<input type="date" name="Fac_DOB" class="form-control" required>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label>Department   :</label>
+													<select class="browser-default custom-select" name="Fac_Dept">
+														<option>Select Department</option>
+														<option value="CS-AI">CS-AI</option>
+														<option value="AI&DS">AI&DS</option>
+														<option value="CS">CS</option>
+														<option value="CS-CY">CS-CY</option>
+														<option value="ME">ME</option>
+														<option value="CE">CE</option>
+														<option value="ECE">ECE</option>
+														<option value="EEE">EEE</option>
+														<option value="MCA">MCA</option>													
+													</select>
+												</div>
+											</div>										
+										</div>
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-primary" name="add-faculty" value="Add Faculty">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+				if(isset($_POST['Search'])){
+					$Fac_Name=$_POST['Fac_Name'];
+					$query ="SELECT * FROM faculty WHERE Fac_Name LIKE '%$Fac_Name%'";				
+			?>
+					<section class="mt-3">
 						<table class="w-100 table-elements mb-5 table-three-tr text-center" cellpadding="10">
 							<tr class="table-tr-head table-three text-white">
-								<th>Faculty ID</th>
+								<th>Company ID</th>
 								<th>Name</th>
-								<th>Department</th>
+								<th>Type</th>
+								<th>Address</th>
 								<th colspan="1">Operations</th>
 							</tr>
-							<?php 								
-								$query ="SELECT `Fac_ID`,`Fac_Name`,`Fac_Dept` FROM Faculty;";
-								$run=mysqli_query($con,$query);
-								while($row=mysqli_fetch_array($run)) {?>
+							<?php
+								$run=mysqli_query($con,$query);							
+								while($row=mysqli_fetch_array($run)){
+							?>
 							<tr>
-								
-								<td>
-									<?php echo $row["Fac_ID"] ?>
-								</td>
-								<td>
-									<?php echo $row["Fac_Name"] ?>
-								</td>
-								<td>
-									<?php echo $row["Fac_Dept"] ?>
-								</td>
-								<td width='250'>
-									<?php 
-										echo "<a class='btn btn-info' href=display-student.php?Stud_ID=".$row['Fac_ID'].">Profile</a>";
-										echo '  <a class="btn btn-primary" href=update-student.php?Stud_ID='.$row['Fac_ID'].'>Update</a>';
-										echo '	<a class="btn btn-danger" href=delete.php?Stud_ID='.$row['Fac_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
-									?>
+								<td><?php echo $row["Fac_ID"] ?></td>
+								<td><?php echo $row["Fac_Name"] ?></td>
+								<td><?php echo $row["Fac_Dept"] ?></td>
+								<td><?php echo $row["Fac_Email"] ?></td>						
+								<td width='300'>
+								<?php 
+									echo "<a class='btn btn-info' href=display-company.php?Fac_ID=".$row['Fac_ID'].">Profile</a> ";
+									echo '  <a class="btn btn-primary" href=update-student.php?Stud_ID='.$row['Fac_ID'].'>Update</a>';
+									echo '	<a class="btn btn-danger" href=delete.php?Fac_ID='.$row['Fac_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
+								?>
 								</td>
 							</tr>
-							<?php }
-								?>
-						</table>
+							<?php		
+								}
+							?>
+						</table>		
 					</section>
-				</div>
-			</div>
+				<?php
+					}
+					else{
+				?>
+						<div class="row">
+							<div class="col-md-12 container-fluid">
+								<section class="mt-3">						
+									<table class="w-100 table-elements mb-5 table-three-tr text-center" cellpadding="10">
+										<tr class="table-tr-head table-three text-white">
+											<th>Faculty ID</th>
+											<th>Name</th>
+											<th>Department</th>
+											<th colspan="1">Operations</th>
+										</tr>
+										<?php 								
+											$query ="SELECT `Fac_ID`,`Fac_Name`,`Fac_Dept` FROM Faculty;";
+											$run=mysqli_query($con,$query);
+											while($row=mysqli_fetch_array($run)) {?>
+										<tr>
+											
+											<td><?php echo $row["Fac_ID"] ?></td>
+											<td><?php echo $row["Fac_Name"] ?></td>
+											<td><?php echo $row["Fac_Dept"] ?></td>
+											<td width='250'>
+												<?php 
+													echo "<a class='btn btn-info' href=display-student.php?Stud_ID=".$row['Fac_ID'].">Profile</a>";
+													echo '  <a class="btn btn-primary" href=update-student.php?Stud_ID='.$row['Fac_ID'].'>Update</a>';
+													echo '	<a class="btn btn-danger" href=delete.php?Stud_ID='.$row['Fac_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
+												?>
+											</td>
+										</tr>
+										<?php }
+											?>
+									</table>
+								</section>
+							</div>
+						</div>
+				<?php
+					}
+				?>
 		</div>
 	</main>
 	<script>

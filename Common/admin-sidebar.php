@@ -15,9 +15,9 @@
         </div>   
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="../admin/Student.php">
+            <a class="nav-link" href="../admin/student.php">
               <span data-feather="file"></span>
-              <i class="fa fa-user mr-2" aria-hidden="true"></i> Student Registration
+              <i class="fa fa-user mr-2" aria-hidden="true"></i> User Registration
             </a>
 		      </li>
           <li class="nav-item">
@@ -27,21 +27,27 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../admin/jobpostings.php">
-              <span data-feather="users"></span>
-              <i class="fa fa-book mr-2" aria-hidden="true"></i> Placements
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="../admin/campus-drive.php">
               <span data-feather="bar-chart-2"></span>
-              <i class="fa fa-briefcase mr-2" aria-hidden="true"></i> Add Drive
+              <i class="fa fa-plus mr-2" aria-hidden="true"></i> Add Drive
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../admin/view-details.php">
+            <a class="nav-link" href="../admin/view-applicants.php">
+              <span data-feather="users"></span>
+              <i class="fa fa-bars mr-2" aria-hidden="true"></i> Drive Applicants
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../admin/view-students-data.php">
               <span data-feather="layers"></span>
-              <i class="fa fa-users mr-2" aria-hidden="true"></i> View
+              <i class="fa fa-users mr-2" aria-hidden="true"></i> View Placement Data
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../admin/placement-statistics.php">
+              <span data-feather="layers"></span>
+              <i class="fa fa-bar-chart mr-2" aria-hidden="true"></i> Placement Statistics
             </a>
           </li>
           <li class="nav-item">

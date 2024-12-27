@@ -13,6 +13,7 @@
 <?php  
 	if (isset($_POST['Submit'])) {
 		$D_Name=$_POST['D_Name'];
+		$Role=$_POST['Role'];
 		$Year=$_POST['Year'];
 		$Course = implode(",", $_POST['Course']);
 		$Branch = implode(",", $_POST['Branch']);
@@ -23,8 +24,9 @@
 		$Backlogs=$_POST['Backlogs'];
 		$D_Package=$_POST['D_Package'];
 		$D_Date=$_POST['D_Date'];
+		$C_ID=$_POST['C_ID'];
 
-		$query="INSERT INTO `drive`(`D_Name`, `Course`, `Branch`, `Year`, `Marks_10th`, `Marks_12th`, `Marks_UG`, `CGPA`, `Backlogs`,`D_Package`, `D_Date`) VALUES ('$D_Name', '$Course', '$Branch', '$Year', '$Marks_10th', '$Marks_12th', '$Marks_UG', '$CGPA', '$Backlogs', '$D_Package' , '$D_Date')";
+		$query="INSERT INTO `drive`(`D_Name`, `Role`, `Course`, `Branch`, `Year`, `Marks_10th`, `Marks_12th`, `Marks_UG`, `CGPA`, `Backlogs`,`D_Package`, `D_Date`, `C_ID`) VALUES ('$D_Name', '$Role', '$Course', '$Branch', '$Year', '$Marks_10th', '$Marks_12th', '$Marks_UG', '$CGPA', '$Backlogs', '$D_Package' , '$D_Date' , '$C_ID')";
 		$run=mysqli_query($con, $query);
 		if ($run) {
 			echo "<script>alert('Success'); history.back();</script>";
@@ -38,7 +40,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>Company - Jobs</title>
+		<title>Admin - Campus Drive</title>
 	</head>
 	<body>
 		<?php include('../common/common-header.php') ?>
@@ -52,20 +54,37 @@
 					<div class="col-md-12 container-fluid">
 						<form method="POST" enctype="multipart/form-data">
 							<div class="row mt-3">
-								<div class="col-md-6">
-									<label>Name</label>
+								<div class="col-md-4">
+									<label>Drive Name</label>
 									<input type="text" name="D_Name" class="form-control" required>
 								</div>
-								<div class="col-md-6">
-									<label>Batch</label>
-									<input type="number" name="Year" class="form-control">
+								<div class="col-md-4">
+									<label>Company Name</label>
+									<select class="form-control" name="C_ID" required>
+										<option>Select Company Name</option>
+										<?php
+											$query="SELECT * from company";
+											$run=mysqli_query($con,$query);
+											while($row=mysqli_fetch_array($run)) {
+												echo"<option value=".$row['C_ID'].">".$row['C_Name']."</option>";
+											}
+										?>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<label>Role</label>
+									<input type="text" name="Role" class="form-control" required>
 								</div>
 							</div>					
 							<div class="row mt-3">
+								<div class="col-md-4">
+									<label>Batch</label>
+									<input type="number" name="Year" class="form-control" required>
+								</div>
 								<div class="col">
 									<?php
 										$batches = ['B.Tech','M.Tech','MCA'];
-										echo "<label>Select Course</label>\t";
+										echo "<label class='my-4'>Select Course</label>\t";
 										foreach ($batches as $batch) {
 											echo "\t<div class='form-check form-check-inline'>
 													<input class='form-check-input' type='checkbox' name='Course[]' value='$batch'>
@@ -77,7 +96,7 @@
 								<div class="col">
 									<?php
 										$batches = ['CS', 'CS-AI',  'AI-DS', 'CS-CY', 'ME', 'CE', 'EEE', 'ECE', 'Computer Applications'];
-										echo "<label>Select Branch</label>\t";
+										echo "<label class='my-4'>Select Branch</label>\t";
 										foreach ($batches as $batch) {
 											echo "\t<div class='form-check form-check-inline'>
 													<input class='form-check-input' type='checkbox' name='Branch[]' value='$batch'>
@@ -197,7 +216,9 @@
 							<table class="w-100 table-elements table-three-tr text-center" cellpadding="10">
 								<tr class="table-tr-head table-three text-white">
 									<th>Drive ID</th>
-									<th>Name</th>
+									<th>Drive Name</th>
+									<th>Comapany</th>
+									<th>Branch</th>
 									<th>Year</th>
 									<th>Last Date</th>
 									<th>10th</th>
@@ -211,7 +232,7 @@
 								</tr>
 								<?php
 									$query="SELECT 
-												d.*, 
+												d.*, c.*,
 												COUNT(DISTINCT s.Stud_ID) AS Stud_Count,
 												COUNT(DISTINCT a.App_ID) AS App_Count
 											FROM 
@@ -228,6 +249,8 @@
 												AND d.D_Package <= s.Stud_Package
 											LEFT JOIN application a 
 												ON a.D_ID = d.D_ID
+											LEFT JOIN company c ON
+												c.C_ID = d.C_ID
 											GROUP BY d.D_ID";
 									$pack=array("0"=>"Low","1"=>"Medium","2"=>"High");
 									$run=mysqli_query($con,$query);
@@ -236,6 +259,8 @@
 										echo "<tr>";
 										echo "<td>".$row['D_ID']."</td>";
 										echo "<td>".$row['D_Name']."</td>";
+										echo "<td>".$row['C_Name']."</td>";
+										echo "<td>".$row['Branch']."</td>";
 										echo "<td>".$row['Year']."</td>";
 										echo "<td>".$row['D_Date']."</td>";
 										echo "<td>".$row['Marks_10th']."</td>";

@@ -44,10 +44,10 @@
                         <tr>
                             <th>Admission No</th>
                             <td><?php echo $row['Stud_ID']; ?></td>
-                        </tr>                    
+                        </tr>
                         <tr>
-                            <th>Programme</th>
-                            <td><?php echo $row['Stud_Course']; ?></td>
+                            <th>University Register No</th>
+                            <td><?php echo $row['Stud_Reg_No']; ?></td>
                         </tr>
                         <tr>
                             <th>Name</th>
@@ -62,16 +62,28 @@
                             <td><?php echo $row['Stud_Gender']; ?></td>
                         </tr>
                         <tr>
+                            <th>Course</th>
+                            <td><?php echo $row['Stud_Course']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Branch</th>
+                            <td><?php echo $row['Stud_Batch']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Year</th>
+                            <td><?php echo $row['Stud_Year']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><?php echo $row['Stud_Address']; ?></td>
+                        </tr>
+                        <tr>
                             <th>Phone Number</th>
                             <td><?php echo $row['Stud_Mob']; ?></td>
                         </tr>
                         <tr>
                             <th>Email</th>
                             <td><?php echo $row['Stud_Email']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td><?php echo $row['Stud_Address']; ?></td>
                         </tr>
                         <tr>
                             <th>Caste</th>
@@ -82,24 +94,8 @@
                             <td><?php echo $row['Stud_M_T']; ?></td>
                         </tr>
                         <tr>
-                            <th>Course</th>
-                            <td><?php echo $row['Stud_Course']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Batch</th>
-                            <td><?php echo $row['Stud_Batch']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Semester</th>
-                            <td><?php echo $row['Stud_Year']; ?></td>
-                        </tr>
-                        <tr>
                             <th>ID-Proof Number</th>
                             <td><?php echo $row['Stud_ID_No']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>University Register No</th>
-                            <td><?php echo $row['Stud_Reg_No']; ?></td>
                         </tr>
                     </table>
                 </div>                        
@@ -141,6 +137,40 @@
                         <tr>
                             <th>Annual Income</th>
                             <td><?php echo $row['Annual_Income']; ?></td>
+                        </tr>
+                    </table>
+                    <table class="table table-light table-hover table-bordered border-info" align="center">
+                        <tr class="table-info text-center">
+                            <th colspan="2">Placement Information</th>
+                        </tr>
+                        <tr>
+                            <th>CGPA</th>
+                            <td><?php echo $row['CGPA']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Backlogs</th>
+                            <td><?php echo $row['Stud_Backlogs']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Placement Status</th>
+                            <td><?php echo ($row['Stud_Placement']==1) ? "Yes": "No" ?></td>
+                        </tr>
+                        <?php 
+                            $query1="SELECT * FROM placement p, company c WHERE p.C_ID=c.C_ID AND p.Stud_ID='$Stud_ID'";
+                            $run1 = mysqli_query($con, $query1);
+                            $row1 = mysqli_fetch_array($run1);
+                        ?>
+                        <tr>
+                            <th>Company Name</th>
+                            <td><?php echo $row1['C_Name']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td><?php echo $row1['C_Desg']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Package</th>
+                            <td><?php echo $row1['P_LPA']; ?></td>
                         </tr>
                     </table>
                 </div>

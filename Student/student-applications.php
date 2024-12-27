@@ -38,15 +38,17 @@
 								<th>Application ID</th>
 								<th>Drive ID</th>
 								<th>Drive Name</th>
+								<th>Company Name</th>
 							</tr>
 							<?php
-								$query="SELECT * FROM application a, student s, drive d WHERE a.S_ID=s.Stud_ID AND a.D_ID=D.D_ID and a.S_ID='$Stud_ID'";
+								$query="SELECT * FROM application a, student s, company c, drive d WHERE a.S_ID=s.Stud_ID AND a.D_ID=D.D_ID AND c.C_ID=d.C_ID AND a.S_ID='$Stud_ID'";
 								$run=mysqli_query($con,$query);
 								while($row=mysqli_fetch_array($run)) {
 									echo "<tr>";
 									echo "<td>".$row["App_ID"]."</td>";
 									echo "<td>".$row["D_ID"]."</td>";
 									echo "<td>".$row["D_Name"]."</td>";
+									echo "<td>".$row["C_Name"]."</td>";
 									echo "</tr>";
 								}
 							?>
