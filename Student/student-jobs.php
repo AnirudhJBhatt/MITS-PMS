@@ -46,7 +46,15 @@
 									<th>Action</th>
 								</tr>
 								<?php
-									$query="SELECT DISTINCT d.* FROM drive d JOIN student s ON d.Marks_10th <= s.Marks_10th AND d.Marks_12th <= s.Marks_12th AND d.Marks_UG <= s.Marks_UG AND d.CGPA <= s.CGPA";
+									$query="SELECT * FROM drive d, student s WHERE FIND_IN_SET(s.Stud_Course, d.Course) > 0 
+									AND FIND_IN_SET(s.Stud_Batch, d.Branch) > 0 
+									AND d.Year = s.Stud_Year 
+									AND d.Marks_10th <= s.Marks_10th 
+									AND d.Marks_12th <= s.Marks_12th 
+									AND (s.Marks_UG <= 0 OR d.Marks_UG <= s.Marks_UG) 
+									AND d.CGPA <= s.CGPA AND d.Backlogs <= s.Stud_Backlogs 
+									AND d.D_Package <= s.Stud_Package 
+									AND s.Stud_ID='$Stud_ID'";
 									$run=mysqli_query($con,$query);
 									while($row=mysqli_fetch_array($run)) {
 										$D_ID=$row['D_ID'];

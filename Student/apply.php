@@ -13,7 +13,7 @@
 <!---------------- Session Ends form here ------------------------>
 <?php
     $D_ID=$_GET['D_ID'];
-    $query="INSERT INTO `application`(`Stud_ID`, `D_ID`) VALUES ('$Stud_ID','$D_ID')";
+    $query="INSERT INTO `application`(`S_ID`, `D_ID`) VALUES ('$Stud_ID','$D_ID')";
     $run=mysqli_query($con,$query);
     if($run){
 		header('Location: student-jobs.php');

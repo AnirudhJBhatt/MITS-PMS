@@ -55,7 +55,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>faculty - Drives</title>
+		<title>Faculty - View Applicants</title>
 	</head>
 	<body>
 		<?php include('../common/common-header.php') ?>
@@ -63,15 +63,15 @@
 		<main role="main" class="col-xl-10 col-lg-9 col-md-8 ml-sm-auto px-md-4 mb-2 w-100">
 			<div class="sub-main">
 				<div class="bar-margin text-center d-flex flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 text-white admin-dashboard pl-3">
-					<h4>Campus Drives</h4>
+					<h4>View Applicants</h4>
 				</div>
 				<section class="mt-3">					
 					<label>
-						<h5>View Applicants</h5>
+						<h5>Select Drive</h5>
 					</label>
-					<form action="" method="post">
+					<form method="post">
 						<div class="row">
-							<div class="col-5">
+							<div class="col-6">
 								<div class="input-group">
 									<select class="form-control" name="D_ID">
 										<option>Select Drive</option>
@@ -84,6 +84,7 @@
 										?>
 									</select>
 									<input type="submit" class="btn btn-primary px-4 ml-4" name="Search" value="Search">
+									<input type="submit" class="btn btn-success px-4 ml-4" name="View" value="View">
 								</div>
 							</div>
 						</div>
@@ -164,6 +165,88 @@
 						</div>				
 					</section>
 				<?php				
+					}
+					if(isset($_REQUEST['View'])){
+						$D_ID=$_POST['D_ID'];
+						$i=1;
+				?>
+						<section class="mt-3">
+							<table class="w-100 table-elements table-three-tr text-center" cellpadding="10">
+								<tr class="table-tr-head table-three text-white">
+									<th class="w-25">Roll No</th>
+									<th class="w-25">Student ID</th>
+									<th class="w-25">Name</th>
+									<th class="w-25">Application Status</th>
+								</tr>
+								<?php
+									$query="SELECT 
+											s.Stud_ID, 
+											s.Stud_Name,
+											CASE 
+												WHEN a.App_ID IS NOT NULL THEN 'Applied'
+												ELSE 'Not Applied'
+											END AS App_Status
+										FROM 
+											student s
+										LEFT JOIN drive d 
+											ON FIND_IN_SET(s.Stud_Course, d.Course) > 0 
+											AND FIND_IN_SET(s.Stud_Batch, d.Branch) > 0 
+											AND d.Year = s.Stud_Year 
+											AND d.Marks_10th <= s.Marks_10th 
+											AND d.Marks_12th <= s.Marks_12th 
+											AND (s.Marks_UG <= 0 OR d.Marks_UG <= s.Marks_UG) 
+											AND d.CGPA <= s.CGPA 
+											AND d.Backlogs <= s.Stud_Backlogs 
+											AND d.D_Package <= s.Stud_Package
+										LEFT JOIN application a 
+											ON a.D_ID = d.D_ID 
+											AND a.S_ID = s.Stud_ID
+										WHERE 
+											d.D_ID = '$D_ID'
+											AND s.Stud_Batch = '$Fac_Dept'
+										ORDER BY App_Status";
+									$run=mysqli_query($con,$query);
+									while($row=mysqli_fetch_array($run)) {
+								?>
+								<tr>
+									<td><?php echo $i++; ?></td>
+									<td><?php echo $row['Stud_ID']; ?></td>
+									<td><?php echo $row['Stud_Name']; ?></td>
+									<td><?php echo $row['App_Status']; ?></td>
+								</tr>
+								<?php
+									}
+									$query="SELECT 
+												d.*, 
+												COUNT(DISTINCT s.Stud_ID) AS Stud_Count,
+												COUNT(DISTINCT a.App_ID) AS App_Count
+											FROM 
+												drive d
+											LEFT JOIN student s 
+												ON FIND_IN_SET(s.Stud_Course, d.Course) > 0 
+												AND FIND_IN_SET(s.Stud_Batch, d.Branch) > 0 
+												AND d.Year = s.Stud_Year 
+												AND d.Marks_10th <= s.Marks_10th 
+												AND d.Marks_12th <= s.Marks_12th 
+												AND (s.Marks_UG <= 0 OR d.Marks_UG <= s.Marks_UG) 
+												AND d.CGPA <= s.CGPA 
+												AND d.Backlogs <= s.Stud_Backlogs 
+												AND d.D_Package <= s.Stud_Package
+											LEFT JOIN application a 
+												ON a.D_ID = d.D_ID
+											WHERE 
+												s.Stud_Batch = '$Fac_Dept' AND
+                                                d.D_ID='$D_ID'
+											GROUP BY 
+												d.D_ID";
+									$run=mysqli_query($con,$query);
+									$row=$row=mysqli_fetch_array($run);
+									echo '<tr><th colspan="4">Eligible Students:	'.$row['Stud_Count'].' 	Applied Students:	'.$row['App_Count'].'</th></tr>';
+								?>
+							</table>				
+						</section>
+					
+				<?php
 					}
 				?>
 			</div>

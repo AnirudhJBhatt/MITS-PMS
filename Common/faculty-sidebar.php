@@ -25,19 +25,19 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../faculty/viewstudents.php">
+						<a class="nav-link" href="../faculty/view-students.php">
 						<span data-feather="file"></span>
 						<i class="fa fa-users mr-2" aria-hidden="true"></i> Students
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../faculty/viewplacements.php">
+						<a class="nav-link" href="../faculty/view-placements.php">
 						<span data-feather="shopping-cart"></span>
 						<i class="fa fa-book mr-2" aria-hidden="true"></i> Placements
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="../faculty/updatemarks.php">
+						<a class="nav-link" href="../faculty/update-marks.php">
 						<span data-feather="shopping-cart"></span>
 						<i class="fa fa-database mr-2" aria-hidden="true"></i> Update CGPA
 						</a>

@@ -112,16 +112,17 @@
                     $_SESSION['LoginAdmin']=$row["ID"];
                     header('Location: ./admin/admin-index.php');
                 }
-                else if ($row["Role"]=="Company" and $row["account"]=="Activate")
+                else if ($row["Role"]=="Faculty" and $row["account"]=="Activate")
                 {
-                    $_SESSION['LoginCompany']=$row["user_id"];
-                    header('Location: ./company/company-index.php');
+                    $_SESSION['LoginFaculty']=$row['user_id'];
+                    header('Location: ./faculty/faculty-index.php');
                 }
                 else if ($row["Role"]=="Student" and $row["account"]=="Activate")
                 {
                     $_SESSION['LoginStudent']=$row['user_id'];
                     header('Location: ./student/student-index.php');
                 }
+                
             }
         }
         else

@@ -31,7 +31,7 @@
 				$run = mysqli_query($con, $query);
 
 				if ($run) {
-					echo "<script>alert('CGPA updated successfully'); window.location='updatemarks.php';</script>";
+					echo "<script>alert('CGPA updated successfully'); window.location='update-marks.php';</script>";
 				} else {
 					echo "<script>alert('Error updating CGPA');</script>";
 				}
@@ -42,7 +42,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>Faculty - View Students</title>
+		<title>Faculty - Update CGPA</title>
 	</head>
 	<body>
 		<?php include('../common/common-header.php') ?>
@@ -50,7 +50,7 @@
 		<main role="main" class="col-xl-10 col-lg-9 col-md-8 ml-sm-auto px-md-4 mb-2 w-100">
 			<div class="sub-main">
 				<div class="bar-margin text-center d-flex flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 text-white admin-dashboard pl-3">
-					<h4>View Students</h4>
+					<h4>Update CGPA</h4>
 				</div>
 				<section class="mt-3">					
 					<label>

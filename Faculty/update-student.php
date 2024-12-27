@@ -439,10 +439,10 @@
     $run1=mysqli_query($con,$upquery);
 
     if ($run1) {
-        echo "<script>confirm('Record updated'); window.location='viewstudents.php';</script>";
+        echo "<script>confirm('Record updated'); window.location='view-students.php';</script>";
     }
     else {
-        echo "<script>alert('Record not updated'); window.location='viewstudents.php';</script>";
+        echo "<script>alert('Record not updated'); window.location='view-students.php';</script>";
     }
 }
 ?>
