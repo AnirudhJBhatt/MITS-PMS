@@ -206,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<?php	
 						}
 						else{
-							echo '<div class="alert alert-danger mt-3" role="alert">No Data Found!</div>';
+							echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
 						}			
 					}
 
@@ -263,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<?php	
 						}
 						else{
-							echo '<div class="alert alert-danger mt-3" role="alert">No Data Found!</div>';
+							echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
 						}			
 					}
 				?>

@@ -250,7 +250,7 @@
                 </div>
             </div>
             <div class='footer text-center mb-3'>
-                <a class="btn btn-success" href="update-student.php?Stud_ID=<?php echo $row['Stud_ID'];?>">Update</a>
+                <a class="btn btn-success" href="update-student.php?Stud_ID=<?php echo $row['Stud_ID'];?>" target="_blank">Update</a>
                 <a class='btn btn-danger' href="javascript: history.back()">Close</a>
             </div>
         </div>	    

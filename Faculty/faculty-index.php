@@ -24,6 +24,41 @@
 	<head>
 		<title>Faculty - Dashboard</title>
 	</head>
+	<style>
+		.notice-board {
+			height: 200px; /* Adjust as needed */
+			overflow: hidden;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			padding: 10px;
+		}
+
+		.notices {
+			display: flex;
+			flex-direction: column;
+			animation: scroll-up 10s linear infinite;
+		}
+		
+		.notice-item {
+			margin-bottom: 20px;
+			border-bottom: 1px solid #ddd;
+			padding-bottom: 10px;
+		}
+
+		.notice-board:hover .notices {
+			animation-play-state: paused;
+		}
+		
+		@keyframes scroll-up {
+			0% {
+				transform: translateY(0%);
+			}
+			100% {
+				transform: translateY(-100%);
+			}
+		}
+  	</style>
 	<body>
 		<?php include('../common/common-header.php') ?>
 		<?php include('../common/faculty-sidebar.php') ?>  
@@ -32,7 +67,7 @@
 			<div class="sub-main">
 				<div class="text-center d-flex flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 text-white admin-dashboard pl-3">
 					<h4 class="">Welcome <?php echo $row['Fac_Name']; ?> </h4>
-				</div>				
+				</div>	
 				<div class="row">
 					<div class="col-md-12">
 						<section class="container-fluid">
@@ -76,6 +111,23 @@
 									</div>                        
 								</div>
 							</div>  
+						</section>
+					</div>
+					<div class="col-md-12">
+						<section class="container-fluid">
+							<div class="container mb-5 border border-dark rounded"> 
+								<h2 class="text-center mb-3">Notice Board</h2>
+								<div class="notice-board">
+									<div class="notices">
+										<div class="notice-item">
+											<strong>07 Dec 2023</strong>
+											<h5>Modified Punishments for Malpractice</h5>
+											<p>Regarding the Modified Punishments for Malpractice</p>
+											<a href="#" class="text-primary">View Document</a>
+										</div>
+									</div>
+								</div>
+							</div>	
 						</section>
 					</div>
 				</div>

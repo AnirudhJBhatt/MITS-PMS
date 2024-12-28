@@ -1,14 +1,12 @@
 <!---------------- Session starts form here ----------------------->
 <?php  
 	session_start();
-	if (!$_SESSION["LoginAdmin"])
-	{
+	if (!$_SESSION["LoginAdmin"]){
 		echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
         echo '<script>window.location="../login/login.php"</script>';
 	}
-		require_once "../connection/connection.php";
-		$_SESSION["LoginStudent"]="";
-	?>
+	require_once "../connection/connection.php";
+?>
 <!---------------- Session Ends form here ------------------------>
 
 <!doctype html>

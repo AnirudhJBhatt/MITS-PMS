@@ -1,21 +1,10 @@
 <?php  
 	session_start();
-	if (!$_SESSION["LoginFaculty"]){
+	if (!$_SESSION["LoginAdmin"])	{
 		echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
         echo '<script>window.location="../login/login.php"</script>';
 	}
-
 	require_once "../connection/connection.php";
-
-    $Fac_ID = $_REQUEST['Fac_ID'];
-
-    $query = "SELECT * FROM `faculty` WHERE `Fac_ID` = '$Fac_ID'";
-    
-    $run = mysqli_query($con, $query);
-    
-    $row = mysqli_fetch_array($run);
-    
-    $file1 = $row['Fac_Image'];
 ?>
 
 <!DOCTYPE html>
@@ -99,11 +88,7 @@
                 </div> 
                 <div class="col">
                     <label>Designation</label>
-                    <select class="form-control" name="Fac_Desg">
-                        <option value="Asst Professor" <?php echo ($row['Fac_Desg'] == "Asst Professor") ? 'selected' : ''; ?>>Asst Professor</option>
-                        <option value="Assoc Professor" <?php echo ($row['Fac_Desg'] == "Assoc Professor") ? 'selected' : ''; ?>>Assoc Professor</option>
-                        <option value="Professor" <?php echo ($row['Fac_Desg'] == "Professor") ? 'selected' : ''; ?>>Professor</option>
-                    </select>  
+                    <input type="text" class="form-control" value= "<?php echo $row['Fac_Desg']; ?>" name="Fac_Desg">
                 </div>
                 <div class="col">
                     <label>Faculty Image</label>

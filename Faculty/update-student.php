@@ -55,6 +55,7 @@
                 <div class="col">
                     <label>Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Name']; ?>" name="Stud_Name">
+                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Date of Birth</label>
@@ -62,17 +63,22 @@
                 </div>
                 <div class="col">
                     <label>Gender</label>
-                    <input type="text" class="form-control" value = "<?php echo $row['Stud_Gender'] ?>" name="Stud_Gender">
+                    <select class="form-control" name="Stud_Gender">
+                        <option value="Male" <?php echo ($row['Stud_Gender'] == "Male") ? 'selected' : ''; ?>>Male</option>
+                        <option value="Female" <?php echo ($row['Stud_Gender'] == "Female") ? 'selected' : ''; ?>>Female</option>
+                    </select>    
                 </div>
             </div>
             <div class="row"> 
                 <div class="col">
                     <label>Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mob']; ?>" name="Stud_Mob">
+                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Email</label>
                     <input type="email" class="form-control" value= "<?php echo $row['Stud_Email']; ?>" name="Stud_Email">
+                    <div class="error text-danger"></div>
                 </div>                       
                 <div class="col">
                     <label>Address</label>
@@ -87,25 +93,12 @@
                 <div class="col">
                     <label>Mother Tongue</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_M_T']; ?>" name="Stud_M_T">
-                </div>            
-                <div class="col">
-                    <label>Course</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Course']; ?>" name="Stud_Course">
-                </div>                     
-            </div>
-            <div class="row">   
-                <div class="col">
-                    <label>Batch</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Batch']; ?>" name="Stud_Batch">
                 </div> 
-                <div class="col">
-                    <label>Semester</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Year']; ?>" name="Stud_Year">
-                </div>
                 <div class="col">
                     <label>Student ID Proof No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_ID_No']; ?>" name="Stud_ID_No">
-                </div>
+                    <div class="error text-danger"></div>
+                </div>                
             </div>
             <div class="row"> 
                 <div class="col-sm-4">
@@ -122,6 +115,7 @@
                 <div class="col">
                     <label>Father's Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Father_Name']; ?>" name="Stud_Father_Name">
+                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Father's Occupation</label>
@@ -130,12 +124,14 @@
                 <div class="col">
                     <label>Father's Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Father_No']; ?>" name="Stud_Father_No">
+                    <div class="error text-danger"></div>
                 </div>
             </div>            
             <div class="row">
                 <div class="col">
                     <label>Mother's Name</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mother_Name']; ?>" name="Stud_Mother_Name">
+                    <div class="error text-danger"></div>
                 </div>
                 <div class="col">
                     <label>Mother's Occupation</label>
@@ -144,20 +140,21 @@
                 <div class="col">
                     <label>Mother's Mobile No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_Mother_No']; ?>" name="Stud_Mother_No">
+                    <div class="error text-danger"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <label>Guardian Email</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Guardian_Email']; ?>" name="Guardian_Email">
+                    <div class="error text-danger"></div>
                 </div>
                 <div class="col-sm-4">
                     <label>Annual Income</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Annual_Income']; ?>" name="Annual_Income">
                 </div>
             </div>
-            <h5>Academic Information</h5>
-            
+            <h5>Academic Information</h5>            
             <div id="UG">
                 <div class="row">
                     <div class="col">
@@ -231,17 +228,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-4">
                     <label>10th Marks(%)</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Marks_10th']; ?>" name="Marks_10th">
                 </div>
-                <div class="col">
+                <div class="col-4">
                     <label>10th Marklist</label>
                     <input type="file" class="form-control" value= "<?php echo $row['Mark_List_10th']; ?>" name="Mark_List_10th">
-                </div>
-                <div class="col">
-                    <label>Current CGPA</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['CGPA']; ?>" name="CGPA">
                 </div>
             </div>
             <div class="footer mt-3 text-center">
@@ -260,52 +253,61 @@
         }
 
         function validateForm() {
-			const form = document.getElementById("studregform");
+            // Clear previous error messages
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
 
-			// Validate all name fields
-			const nameFields = ["Stud_Name", "Stud_Father_Name", "Stud_Mother_Name"];
-			for (let field of nameFields) {
-				let name = form[field].value;
-				if (!/^[A-Za-z\s-]+$/.test(name)) {
-					alert("Names should only contain alphabets");
-					return false;
-				}
-			}
+            let isValid = true;
 
-			// Validate Mobile Numbers
-			const mobileFields = ["Stud_Mob", "Stud_Father_No", "Stud_Mother_No"];
-			for (let field of mobileFields) {
-				let mobile = form[field].value;
-				if (!/^\d{10}$/.test(mobile)) {
-					alert("Please enter a valid 10-digit mobile number.");
-					return false;
-				}
-			}
+            // Name Validation
+            const nameFields = ["Stud_Name", "Stud_Father_Name", "Stud_Mother_Name"];
+            for (let field of nameFields) {
+                let inputField = document.querySelector(`input[name="${field}"]`);
+                let name = inputField.value.trim();
+                if (!/^[A-Za-z\s-]+$/.test(name)) {
+                    showError(inputField, "Please enter a valid name.");
+                    isValid = false;
+                }
+            }
 
-			// Validate Email
-			let email = form["Stud_Email"].value;
-			let emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-			if (!emailPattern.test(email)) {
-				alert("Please enter a valid email address.");
-				return false;
-			}
+            // Mobile Validation
+            const phoneFields = ["Stud_Mob", "Stud_Father_No", "Stud_Mother_No"];
+            for (let field of phoneFields) {
+                let inputField = document.querySelector(`input[name="${field}"]`);
+                let phone = inputField.value.trim();
+                if (!/^[6-9]\d{9}$/.test(phone)) {
+                    showError(inputField, "Please enter a valid 10-digit mobile number");
+                    isValid = false;
+                }
+            }
 
-			// Validate Aadhaar Number (12 digits)
-			let aadhaar = form["Stud_ID_No"].value;
-			if (!/^\d{12}$/.test(aadhaar)) {
-				alert("Please enter a valid 12-digit Aadhaar Number.");
-				return false;
-			}
+            // Email Validation
+            const emailFields = ["Stud_Email", "Guardian_Email"];
+            for (let field of emailFields) {
+                let inputField = document.querySelector(`input[name="${field}"]`);
+                let email = inputField.value.trim();
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError(inputField, "Please enter a valid email address.");
+                    isValid = false;
+                }
+            }
+        
+            // Aadhaar Validation
+            let aadhaarField = document.querySelector(`input[name="Stud_ID_No"]`);
+            let aadhaar = aadhaarField.value.trim();
+            if (!/^\d{12}$/.test(aadhaar)) {
+                showError(aadhaarField, "Please enter a valid 12-digit Aadhaar Number.");
+                isValid = false;
+            }
 
-			// Validate CGPA
-			let cgpa = form["CGPA"].value;
-			if (!/^(10|[0-9](\.\d{1,2})?)$/.test(cgpa)) {
-				alert("Please enter a valid CGPA between 0 and 10.");
-				return false;
-			}
+            return isValid; // Form submission only if all validations pass
+        }
 
-			return true;
-		}
+        function showError(field, message) {
+            const errorDiv = field.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('error')) {
+                errorDiv.textContent = message;
+            }
+        }   
     </script>
 </body>
 </html>
@@ -327,12 +329,6 @@
 		$Stud_Caste =$_POST['Stud_Caste'];
 
 		$Stud_M_T =$_POST['Stud_M_T'];
-
-		$Stud_Course =$_POST['Stud_Course'];
-
-		$Stud_Batch =$_POST['Stud_Batch'];
-
-		$Stud_Year =$_POST['Stud_Year'];
 
 		$Stud_ID_No =$_POST['Stud_ID_No'];
 
@@ -382,67 +378,58 @@
 
 		$YOP_10th =$_POST['YOP_10th'];
 
-		$CGPA =$_POST['CGPA'];
+        if(!file_exists($_FILES['Stud_Image']['tmp_name']) || !is_uploaded_file($_FILES['Stud_Image']['tmp_name'])){
+            $Stud_Image = $file1;        
+        }
+        else{       
+            $Stud_Image = $_FILES['Stud_Image']['name'];
+            $tmp_name=$_FILES['Stud_Image']['tmp_name'];
+            $path1 = "images/".$Stud_Image;
+            move_uploaded_file($tmp_name, $path1);
+        }
+        
+        if(!file_exists($_FILES['Mark_List_10th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_10th']['tmp_name'])){
+            $Mark_List_10th = $file2;        
+        }
+        else{       
+            $Mark_List_10th = $_FILES['Mark_List_10th']['name'];
+            $tmp_name=$_FILES['Mark_List_10th']['tmp_name'];
+            $path2 = "images/".$Mark_List_10th;
+            move_uploaded_file($tmp_name, $path2);
+        }   
 
-    if(!file_exists($_FILES['Stud_Image']['tmp_name']) || !is_uploaded_file($_FILES['Stud_Image']['tmp_name'])) 
-    {
-        $Stud_Image = $file1;        
-    }
-    else
-    {       
-        $Stud_Image = $_FILES['Stud_Image']['name'];
-        $tmp_name=$_FILES['Stud_Image']['tmp_name'];
-        $path1 = "images/".$Stud_Image;
-        move_uploaded_file($tmp_name, $path1);
-    }
-    
-    if(!file_exists($_FILES['Mark_List_10th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_10th']['tmp_name'])) 
-    {
-        $Mark_List_10th = $file2;        
-    }
-    else
-    {       
-        $Mark_List_10th = $_FILES['Mark_List_10th']['name'];
-        $tmp_name=$_FILES['Mark_List_10th']['tmp_name'];
-        $path2 = "images/".$Mark_List_10th;
-        move_uploaded_file($tmp_name, $path2);
-    }   
+        
+        if(!file_exists($_FILES['Mark_List_12th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_12th']['tmp_name'])){
+            $Mark_List_12th = $file3;        
+        }
+        else{       
+            $Mark_List_12th = $_FILES['Mark_List_12th']['name'];
+            $tmp_name=$_FILES['Mark_List_12th']['tmp_name'];
+            $path3 = "images/".$Mark_List_12th;
+            move_uploaded_file($tmp_name, $path3);
+        }   
+        
+        
+        if(!file_exists($_FILES['Mark_List_UG']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_UG']['tmp_name']))
+        {
+            $Mark_List_UG = $file4;        
+        }
+        else{       
+            $Mark_List_UG = $_FILES['Mark_List_UG']['name'];
+            $tmp_name=$_FILES['Mark_List_UG']['tmp_name'];
+            $path3 = "images/".$Mark_List_UG;
+            move_uploaded_file($tmp_name, $path3);
+        }   
 
-    
-    if(!file_exists($_FILES['Mark_List_12th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_12th']['tmp_name'])) 
-    {
-        $Mark_List_12th = $file3;        
-    }
-    else
-    {       
-        $Mark_List_12th = $_FILES['Mark_List_12th']['name'];
-        $tmp_name=$_FILES['Mark_List_12th']['tmp_name'];
-        $path3 = "images/".$Mark_List_12th;
-        move_uploaded_file($tmp_name, $path3);
-    }   
-    
-    
-    if(!file_exists($_FILES['Mark_List_UG']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_UG']['tmp_name'])) 
-    {
-        $Mark_List_UG = $file4;        
-    }
-    else
-    {       
-        $Mark_List_UG = $_FILES['Mark_List_UG']['name'];
-        $tmp_name=$_FILES['Mark_List_UG']['tmp_name'];
-        $path3 = "images/".$Mark_List_UG;
-        move_uploaded_file($tmp_name, $path3);
-    }   
+        $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_Caste`='$Stud_Caste',`Stud_M_T`='$Stud_M_T',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Guardian_Email`='$Guardian_Email',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
+        
+        $run1=mysqli_query($con,$upquery);
 
-    $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_Caste`='$Stud_Caste',`Stud_M_T`='$Stud_M_T',`Stud_Course`='$Stud_Course',`Stud_Batch`='$Stud_Batch',`Stud_Year`='$Stud_Year',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Guardian_Email`='$Guardian_Email',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`CGPA`='$CGPA',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
-    
-    $run1=mysqli_query($con,$upquery);
-
-    if ($run1) {
-        echo "<script>confirm('Record updated');</script>";
+        if ($run1) {
+            echo "<script>confirm('Record updated'); window.location.href = window.location.href; </script>";
+        }
+        else {
+            echo "<script>alert('Record not updated');</script>";
+        }
     }
-    else {
-        echo "<script>alert('Record not updated');</script>";
-    }
-}
 ?>

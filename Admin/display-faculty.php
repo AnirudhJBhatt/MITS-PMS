@@ -1,16 +1,16 @@
 <!---------------- Session starts form here ----------------------->
 <?php  
-	session_start();
 
-	if (!$_SESSION["LoginFaculty"])
-	{
+    session_start();
+	if (!$_SESSION["LoginAdmin"]){
 		echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
         echo '<script>window.location="../login/login.php"</script>';
 	}
-
+		require_once "../connection/connection.php";
+	
 	require_once "../connection/connection.php";
 
-    $Fac_ID=$_SESSION['LoginFaculty'];
+    $Fac_ID = $_REQUEST['Fac_ID'];
 
 	$query = "SELECT * FROM `faculty` WHERE `Fac_ID` = '$Fac_ID' ";
        
@@ -19,7 +19,6 @@
     $row = mysqli_fetch_array($run);
 ?>
 <!---------------- Session Ends form here ------------------------>
-
 
 <!doctype html>
 <html lang="en">
@@ -39,7 +38,7 @@
                 <div class="col">
                     <table class="table table-light table-hover table-bordered border-info" align="center">
                         <tr class="table-info text-center">
-                            <th colspan="2">Faculty Coordinator Information</th>
+                            <th colspan="2">Personal Information</th>
                         </tr>
                         <tr>
                             <th>Faculty ID</th>
@@ -50,16 +49,24 @@
                             <td><?php echo $row['Fac_Name']; ?></td>
                         </tr>
                         <tr>
-                            <th>Department</th>
-                            <td><?php echo $row['Fac_Dept']; ?></td>
-                        </tr>
-                        <tr>
                             <th>Date of Birth</th>
                             <td><?php echo $row['Fac_DOB']; ?></td>
+                        </tr>                    
+                        <tr>
+                            <th>Department</th>
+                            <td><?php echo $row['Fac_Dept']; ?></td>
+                        </tr>                    
+                        <tr>
+                            <th>Designation</th>
+                            <td><?php echo $row['Fac_Desg']; ?></td>
                         </tr>
                         <tr>
                             <th>Gender</th>
                             <td><?php echo $row['Fac_Gender']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><?php echo $row['Fac_Address']; ?></td>
                         </tr>
                         <tr>
                             <th>Phone Number</th>
@@ -69,16 +76,11 @@
                             <th>Email</th>
                             <td><?php echo $row['Fac_Email']; ?></td>
                         </tr>
-                        <tr>
-                            <th>Address</th>
-                            <td><?php echo $row['Fac_Address']; ?></td>
-                        </tr>
                     </table>
                 </div>                        
             </div>
             <div class='footer text-center mb-3'>
-                <a class="btn btn-success" href="update-faculty.php?Fac_ID=<?php echo $row['Fac_ID'];?>" target="_blank">Update</a>
-                <a class='btn btn-danger' href="javascript: history.back()">Close</a>
+                <a class='btn btn-danger' href="javascript: window.close()">Close</a>
             </div>
         </div>
 	</body>

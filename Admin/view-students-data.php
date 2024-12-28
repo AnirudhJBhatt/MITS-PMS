@@ -18,7 +18,7 @@
 
 		$output = fopen('php://output', 'w');
 		$Stud_Year=$_POST['Stud_Year'];
-		$query = "SELECT * FROM student WHERE Stud_Batch='$Fac_Dept' and Stud_Year='$Stud_Year'";
+		$query = "SELECT * FROM student WHERE Stud_Batch='$Stud_Branch' and Stud_Year='$Stud_Year'";
 		$run = mysqli_query($con, $query);
 
 		if (mysqli_num_rows($run) > 0) {
@@ -46,8 +46,8 @@
 
 		$output = fopen('php://output', 'w');
 		$Stud_Batch=$_POST['Stud_Year'];
-		$Fac_Dept=$_POST['Fac_Dept'];
-		$query="SELECT s.Stud_ID, s.Stud_Name, c.C_Name, p.C_Desg, p.P_LPA from placement p, student s, company c WHERE s.Stud_ID=p.Stud_ID AND c.C_ID=p.C_ID AND s.Stud_Batch='$Fac_Dept' AND s.Stud_Year='$Stud_Batch'";
+		$Stud_Branch=$_POST['Stud_Branch'];
+		$query="SELECT s.Stud_ID, s.Stud_Name, c.C_Name, p.C_Desg, p.P_LPA from placement p, student s, company c WHERE s.Stud_ID=p.Stud_ID AND c.C_ID=p.C_ID AND s.Stud_Batch='$Stud_Branch' AND s.Stud_Year='$Stud_Batch'";
 		$run = mysqli_query($con, $query);
 
 		if (mysqli_num_rows($run) > 0) {
@@ -176,7 +176,7 @@
 				<?php	
 						}
 						else{
-							echo '<div class="alert alert-danger mt-3" role="alert">No Data Found!</div>';
+							echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
 						}			
 					}
 
@@ -217,7 +217,7 @@
 								<div class="text-center mt-2">
 									<form method="POST">
 										<input type="hidden" name="Stud_Year" value="<?php echo $Stud_Batch; ?>">
-										<input type="hidden" name="Fac_Dept" value="<?php echo $Fac_Dept; ?>">
+										<input type="hidden" name="Stud_Branch" value="<?php echo $Stud_Branch; ?>">
 										<input type="submit" name="download2" value="Download" class="btn btn-success">				
 									</form>									
 								</div>				
@@ -225,7 +225,7 @@
 				<?php	
 						}
 						else{
-							echo '<div class="alert alert-danger mt-3" role="alert">No Data Found!</div>';
+							echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
 						}			
 					}
 				?>

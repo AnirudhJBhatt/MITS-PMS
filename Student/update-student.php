@@ -1,7 +1,6 @@
 <?php  
 	session_start();
-	if (!$_SESSION["LoginStudent"])
-	{
+	if (!$_SESSION["LoginStudent"]){
 		echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
         echo '<script>window.location="../login/login.php"</script>';
 	}
@@ -40,12 +39,6 @@
 		$Stud_Caste =$_POST['Stud_Caste'];
 
 		$Stud_M_T =$_POST['Stud_M_T'];
-
-		$Stud_Course =$_POST['Stud_Course'];
-
-		$Stud_Batch =$_POST['Stud_Batch'];
-
-		$Stud_Year =$_POST['Stud_Year'];
 
 		$Stud_ID_No =$_POST['Stud_ID_No'];
 
@@ -95,69 +88,59 @@
 
 		$YOP_10th =$_POST['YOP_10th'];
 
-		$CGPA =$_POST['CGPA'];
+        if(!file_exists($_FILES['Stud_Image']['tmp_name']) || !is_uploaded_file($_FILES['Stud_Image']['tmp_name'])){
+            $Stud_Image = $file1;        
+        }
+        else{       
+            $Stud_Image = $_FILES['Stud_Image']['name'];
+            $tmp_name=$_FILES['Stud_Image']['tmp_name'];
+            $path1 = "images/".$Stud_Image;
+            move_uploaded_file($tmp_name, $path1);
+        }
+        
+        if(!file_exists($_FILES['Mark_List_10th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_10th']['tmp_name'])){
+            $Mark_List_10th = $file2;        
+        }
+        else{       
+            $Mark_List_10th = $_FILES['Mark_List_10th']['name'];
+            $tmp_name=$_FILES['Mark_List_10th']['tmp_name'];
+            $path2 = "images/".$Mark_List_10th;
+            move_uploaded_file($tmp_name, $path2);
+        }   
 
-    if(!file_exists($_FILES['Stud_Image']['tmp_name']) || !is_uploaded_file($_FILES['Stud_Image']['tmp_name'])) 
-    {
-        $Stud_Image = $file1;        
-    }
-    else
-    {       
-        $Stud_Image = $_FILES['Stud_Image']['name'];
-        $tmp_name=$_FILES['Stud_Image']['tmp_name'];
-        $path1 = "images/".$Stud_Image;
-        move_uploaded_file($tmp_name, $path1);
-    }
-    
-    if(!file_exists($_FILES['Mark_List_10th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_10th']['tmp_name'])) 
-    {
-        $Mark_List_10th = $file2;        
-    }
-    else
-    {       
-        $Mark_List_10th = $_FILES['Mark_List_10th']['name'];
-        $tmp_name=$_FILES['Mark_List_10th']['tmp_name'];
-        $path2 = "images/".$Mark_List_10th;
-        move_uploaded_file($tmp_name, $path2);
-    }   
+        
+        if(!file_exists($_FILES['Mark_List_12th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_12th']['tmp_name'])){
+            $Mark_List_12th = $file3;        
+        }
+        else{       
+            $Mark_List_12th = $_FILES['Mark_List_12th']['name'];
+            $tmp_name=$_FILES['Mark_List_12th']['tmp_name'];
+            $path3 = "images/".$Mark_List_12th;
+            move_uploaded_file($tmp_name, $path3);
+        }   
+        
+        
+        if(!file_exists($_FILES['Mark_List_UG']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_UG']['tmp_name'])){
+            $Mark_List_UG = $file4;        
+        }
+        else{       
+            $Mark_List_UG = $_FILES['Mark_List_UG']['name'];
+            $tmp_name=$_FILES['Mark_List_UG']['tmp_name'];
+            $path3 = "images/".$Mark_List_UG;
+            move_uploaded_file($tmp_name, $path3);
+        }   
 
-    
-    if(!file_exists($_FILES['Mark_List_12th']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_12th']['tmp_name'])) 
-    {
-        $Mark_List_12th = $file3;        
-    }
-    else
-    {       
-        $Mark_List_12th = $_FILES['Mark_List_12th']['name'];
-        $tmp_name=$_FILES['Mark_List_12th']['tmp_name'];
-        $path3 = "images/".$Mark_List_12th;
-        move_uploaded_file($tmp_name, $path3);
-    }   
-    
-    
-    if(!file_exists($_FILES['Mark_List_UG']['tmp_name']) || !is_uploaded_file($_FILES['Mark_List_UG']['tmp_name'])) 
-    {
-        $Mark_List_UG = $file4;        
-    }
-    else
-    {       
-        $Mark_List_UG = $_FILES['Mark_List_UG']['name'];
-        $tmp_name=$_FILES['Mark_List_UG']['tmp_name'];
-        $path3 = "images/".$Mark_List_UG;
-        move_uploaded_file($tmp_name, $path3);
-    }   
+        $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_Caste`='$Stud_Caste',`Stud_M_T`='$Stud_M_T',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Guardian_Email`='$Guardian_Email',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
+        
+        $run1=mysqli_query($con,$upquery);
 
-    $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_Caste`='$Stud_Caste',`Stud_M_T`='$Stud_M_T',`Stud_Course`='$Stud_Course',`Stud_Batch`='$Stud_Batch',`Stud_Year`='$Stud_Year',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Guardian_Email`='$Guardian_Email',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`CGPA`='$CGPA',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
-    
-    $run1=mysqli_query($con,$upquery);
-
-    if ($run1) {
-        echo "<script>confirm('Record updated'); window.location='Student-index.php';</script>";
+        if ($run1) {
+            echo "<script>confirm('Record updated'); window.location.href = window.location.href;</script>";
+        }
+        else {
+            echo "<script>alert('Record not updated');</script>";
+        }
     }
-    else {
-        echo "<script>alert('Record not updated'); window.location='Student-index.php';</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -230,26 +213,12 @@
                 <div class="col">
                     <label>Mother Tongue</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_M_T']; ?>" name="Stud_M_T">
-                </div>            
-                <div class="col">
-                    <label>Course</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Course']; ?>" name="Stud_Course">
-                </div>                     
-            </div>
-            <div class="row">   
-                <div class="col">
-                    <label>Branch</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Batch']; ?>" name="Stud_Batch">
                 </div> 
-                <div class="col">
-                    <label>Batch</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Year']; ?>" name="Stud_Year">
-                </div>
                 <div class="col">
                     <label>Student ID Proof No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_ID_No']; ?>" name="Stud_ID_No">
                     <div class="error text-danger"></div>
-                </div>
+                </div>                
             </div>
             <div class="row"> 
                 <div class="col-sm-4">
@@ -390,7 +359,7 @@
             </div>
             <div class="footer mt-3 text-center">
                 <input type="Submit" class="btn btn-success" value="Update" name="update">
-                <input type="Button" class="btn btn-danger" value="Back" onClick="history.back()">
+                <input type="Button" class="btn btn-danger" value="Close" onClick="window.close()">
             </div>
         </form>
     </div>
