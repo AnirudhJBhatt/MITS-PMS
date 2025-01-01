@@ -79,7 +79,7 @@
 									<div class="col align-self-center text-center">
 										<?php  $Fac_Image= $row["Fac_Image"]; ?>
 										<figure class="figure">
-											<img src=<?php echo "../admin/images/$Fac_Image"  ?> class="figure-img img-fluid border" height='290px' width='250px'>  
+											<img src="<?php echo '../Images/'.$Fac_Image; ?>" class="figure-img img-fluid border" height="290px" width="250px">
 										</figure> 
 									</div>
 									<div class="col">

@@ -11,31 +11,38 @@
 <!---------------- Session Ends form here ------------------------>
 <?php
     if (isset($_POST['download1'])) {
-		ob_clean();
-		ob_start();
+        ob_clean();
+        ob_start();
         header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=data.csv');
+        header('Content-Disposition: attachment; filename=data.csv');
 
-		$output = fopen('php://output', 'w');
-		$Stud_Year=$_POST['Stud_Year'];
-		$query = "SELECT * FROM student WHERE Stud_Batch='$Stud_Branch' and Stud_Year='$Stud_Year'";
-		$run = mysqli_query($con, $query);
+        $output = fopen('php://output', 'w');
+        $Stud_Year = $_POST['Stud_Year'];
+        $Stud_Branch = $_POST['Stud_Branch'];
+        $query = "SELECT * FROM student WHERE Stud_Batch='$Stud_Branch' and Stud_Year='$Stud_Year'";
+        $run = mysqli_query($con, $query);
 
-		if (mysqli_num_rows($run) > 0) {
-			$fields = mysqli_fetch_fields($run);
-			$columns = [];
-			foreach ($fields as $field) {
-				$columns[] = $field->name;
-			}
-			fputcsv($output, $columns);
-		}
+        if (mysqli_num_rows($run) > 0) {
+            // Fetch column names from query result
+            $fields = mysqli_fetch_fields($run);
+            $columns = ['Sl.No']; // Add "Sl.No" as the first column
+            foreach ($fields as $field) {
+                $columns[] = $field->name;
+            }
+            fputcsv($output, $columns); // Write header row
+        }
 
-		while ($row = mysqli_fetch_assoc($run)) {
-			fputcsv($output, $row);
-		}
-		fclose($output);
-		ob_end_flush();
-		exit(); 
+        $sl_no = 1; // Initialize serial number
+        while ($row = mysqli_fetch_assoc($run)) {
+            // Prepend serial number to each row
+            $row = array_merge(['Sl.No' => $sl_no], $row);
+            fputcsv($output, $row);
+            $sl_no++; // Increment serial number
+        }
+
+        fclose($output);
+        ob_end_flush();
+        exit(); 
     }
 
 	if (isset($_POST['download2'])) {
@@ -52,15 +59,18 @@
 
 		if (mysqli_num_rows($run) > 0) {
 			$fields = mysqli_fetch_fields($run);
-			$columns = [];
+			$columns = ['Sl.No'];
 			foreach ($fields as $field) {
 				$columns[] = $field->name;
 			}
 			fputcsv($output, $columns);
 		}
 
+		$sl_no = 1;
 		while ($row = mysqli_fetch_assoc($run)) {
+            $row = array_merge(['Sl.No' => $sl_no], $row);
 			fputcsv($output, $row);
+			$sl_no++;
 		}
 		fclose($output);
 		ob_end_flush();
@@ -169,6 +179,7 @@
 								<div class="text-center mt-2">
 									<form method="POST">
 										<input type="hidden" name="Stud_Year" value=<?php echo $Stud_Batch ?>>
+										<input type="hidden" name="Stud_Branch" value="<?php echo $Stud_Branch; ?>">
 										<input type="submit" name="download1" value="Download" class="btn btn-success">				
 									</form>									
 								</div>				

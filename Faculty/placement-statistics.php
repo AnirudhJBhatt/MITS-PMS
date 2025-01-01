@@ -19,37 +19,52 @@
 
 ?>
 <!---------------- Session Ends form here ------------------------>
+
 <?php
     if (isset($_POST['download'])) {
-		ob_clean();
-		ob_start();
+        ob_clean();
+        ob_start();
         header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=data.csv');
+        header('Content-Disposition: attachment; filename=data.csv');
 
-		$output = fopen('php://output', 'w');
-		
-		$Stud_Batch=$_POST['Stud_Batch'];
-		$Stud_Course=$_POST['Stud_Course'];
-		$query ="SELECT c.C_Name, COUNT(p.Stud_ID) AS C_Count, p.P_LPA FROM placement p, company c, student s WHERE p.C_ID=c.C_ID AND s.Stud_ID=p.Stud_ID AND s.Stud_Course='$Stud_Course' AND s.Stud_Batch='$Fac_Dept' AND s.Stud_Year=$Stud_Batch GROUP BY c.C_Name";	
-		$run=mysqli_query($con, $query);
-		
-		if (mysqli_num_rows($run) > 0) {
-			$fields = mysqli_fetch_fields($run);
-			$columns = [];
-			foreach ($fields as $field) {
-				$columns[] = $field->name;
-			}
-			fputcsv($output, $columns);
-		}
+        $output = fopen('php://output', 'w');
+        
+        $Stud_Batch = $_POST['Stud_Batch'];
+        $Stud_Course = $_POST['Stud_Course'];
+        $query = "SELECT c.C_Name, COUNT(p.Stud_ID) AS C_Count, p.P_LPA 
+                  FROM placement p, company c, student s 
+                  WHERE p.C_ID=c.C_ID AND s.Stud_ID=p.Stud_ID 
+                  AND s.Stud_Course='$Stud_Course' 
+                  AND s.Stud_Batch='$Fac_Dept' 
+                  AND s.Stud_Year=$Stud_Batch 
+                  GROUP BY c.C_Name";    
+        $run = mysqli_query($con, $query);
+        
+        if (mysqli_num_rows($run) > 0) {
+            $fields = mysqli_fetch_fields($run);
+            $columns = ['Sl.No']; // Add "Sl.No" to the header
+            foreach ($fields as $field) {
+                $columns[] = $field->name;
+            }
+            fputcsv($output, $columns); // Write the header row
+        }
 
-		while ($row = mysqli_fetch_assoc($run)) {
-			fputcsv($output, $row);
-		}
-		fclose($output);
-		ob_end_flush();
-		exit(); 
+        $sl_no = 1; // Initialize serial number
+        while ($row = mysqli_fetch_assoc($run)) {
+            $row_data = [$sl_no]; // Start with the serial number
+            foreach ($row as $column_value) {
+                $row_data[] = $column_value;
+            }
+            fputcsv($output, $row_data); // Write the data row
+            $sl_no++; // Increment serial number
+        }
+
+        fclose($output);
+        ob_end_flush();
+        exit(); 
     }
 ?>
+
 <!doctype html>
 <html lang="en">
 

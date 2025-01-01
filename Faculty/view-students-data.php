@@ -21,62 +21,75 @@
 <!---------------- Session Ends form here ------------------------>
 <?php
     if (isset($_POST['download1'])) {
-		ob_clean();
-		ob_start();
+        ob_clean();
+        ob_start();
         header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=data.csv');
+        header('Content-Disposition: attachment; filename=data.csv');
 
-		$output = fopen('php://output', 'w');
-		$Stud_Year=$_POST['Stud_Year'];
-		$query = "SELECT * FROM student WHERE Stud_Batch='$Fac_Dept' and Stud_Year='$Stud_Year'";
-		$run = mysqli_query($con, $query);
+        $output = fopen('php://output', 'w');
+        $Stud_Year = $_POST['Stud_Year'];
+        $query = "SELECT * FROM student WHERE Stud_Batch='$Fac_Dept' and Stud_Year='$Stud_Year'";
+        $run = mysqli_query($con, $query);
 
-		if (mysqli_num_rows($run) > 0) {
-			$fields = mysqli_fetch_fields($run);
-			$columns = [];
-			foreach ($fields as $field) {
-				$columns[] = $field->name;
-			}
-			fputcsv($output, $columns);
-		}
+        if (mysqli_num_rows($run) > 0) {
+            $fields = mysqli_fetch_fields($run);
+            $columns = ['Sl.No']; // Add "Sl.No" to the header
+            foreach ($fields as $field) {
+                $columns[] = $field->name;
+            }
+            fputcsv($output, $columns); // Write header
+        }
 
-		while ($row = mysqli_fetch_assoc($run)) {
-			fputcsv($output, $row);
-		}
-		fclose($output);
-		ob_end_flush();
-		exit(); 
+        $sl_no = 1; // Initialize serial number
+        while ($row = mysqli_fetch_assoc($run)) {
+            $row_data = [$sl_no]; // Start with serial number
+            foreach ($row as $column_value) {
+                $row_data[] = $column_value;
+            }
+            fputcsv($output, $row_data);
+            $sl_no++; // Increment serial number
+        }
+        fclose($output);
+        ob_end_flush();
+        exit();
     }
 
-	if (isset($_POST['download2'])) {
-		ob_clean();
-		ob_start();
+    if (isset($_POST['download2'])) {
+        ob_clean();
+        ob_start();
         header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=data.csv');
+        header('Content-Disposition: attachment; filename=data.csv');
 
-		$output = fopen('php://output', 'w');
-		$Stud_Batch=$_POST['Stud_Year'];
-		$Fac_Dept=$_POST['Fac_Dept'];
-		$query="SELECT s.Stud_ID, s.Stud_Name, c.C_Name, p.C_Desg, p.P_LPA from placement p, student s, company c WHERE s.Stud_ID=p.Stud_ID AND c.C_ID=p.C_ID AND s.Stud_Batch='$Fac_Dept' AND s.Stud_Year='$Stud_Batch'";
-		$run = mysqli_query($con, $query);
+        $output = fopen('php://output', 'w');
+        $Stud_Batch = $_POST['Stud_Year'];
+        $Fac_Dept = $_POST['Fac_Dept'];
+        $query = "SELECT s.Stud_ID, s.Stud_Name, c.C_Name, p.C_Desg, p.P_LPA FROM placement p, student s, company c WHERE s.Stud_ID=p.Stud_ID AND c.C_ID=p.C_ID AND s.Stud_Batch='$Fac_Dept' AND s.Stud_Year='$Stud_Batch'";
+        $run = mysqli_query($con, $query);
 
-		if (mysqli_num_rows($run) > 0) {
-			$fields = mysqli_fetch_fields($run);
-			$columns = [];
-			foreach ($fields as $field) {
-				$columns[] = $field->name;
-			}
-			fputcsv($output, $columns);
-		}
+        if (mysqli_num_rows($run) > 0) {
+            $fields = mysqli_fetch_fields($run);
+            $columns = ['Sl.No']; // Add "Sl.No" to the header
+            foreach ($fields as $field) {
+                $columns[] = $field->name;
+            }
+            fputcsv($output, $columns); // Write header
+        }
 
-		while ($row = mysqli_fetch_assoc($run)) {
-			fputcsv($output, $row);
-		}
-		fclose($output);
-		ob_end_flush();
-		exit(); 
+        $sl_no = 1; // Initialize serial number
+        while ($row = mysqli_fetch_assoc($run)) {
+            $row_data = [$sl_no]; // Start with serial number
+            foreach ($row as $column_value) {
+                $row_data[] = $column_value;
+            }
+            fputcsv($output, $row_data);
+            $sl_no++; // Increment serial number
+        }
+        fclose($output);
+        ob_end_flush();
+        exit();
     }
 ?>
+
 <!doctype html>
 <html lang="en">
 	<head>

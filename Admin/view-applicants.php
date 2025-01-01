@@ -12,36 +12,41 @@
 <?php
     if (isset($_POST['download'])) {
         if (!empty($_POST['columns'])) {
-			$D_ID=$_POST['D_ID'];
+            $D_ID = $_POST['D_ID'];
             $columns = array_map('mysqli_real_escape_string', array_fill(0, count($_POST['columns']), $con), $_POST['columns']);
             $selected_columns = implode(", ", $columns);
             $query = "SELECT $selected_columns FROM student s, application a WHERE s.Stud_ID=a.S_ID and a.D_ID='$D_ID'";
             $result = mysqli_query($con, $query);
 
-            if (mysqli_num_rows($result)>0) {
-                if (isset($_POST['download'])) {
-                    ob_clean();
-                    ob_start();
-                    header('Content-Type: text/csv; charset=utf-8');
-                    header('Content-Disposition: attachment; filename=data.csv');
-                    $output = fopen('php://output', 'w');
-                    fputcsv($output, $_POST['columns']);
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $row_data = [];
-                        foreach ($_POST['columns'] as $column) {
-                            $row_data[] = $row[$column];
-                        }
-                        fputcsv($output, $row_data);
-                    }
+            if (mysqli_num_rows($result) > 0) {
+                ob_clean();
+                ob_start();
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename=data.csv');
+                $output = fopen('php://output', 'w');
 
-                    fclose($output);
-                    ob_end_flush();
-                    exit();
+                // Add "Sl.No" to the header
+                $columns_with_serial = array_merge(['Sl.No'], $_POST['columns']);
+                fputcsv($output, $columns_with_serial);
+
+                $sl_no = 1; // Initialize serial number
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $row_data = [$sl_no]; // Start with the serial number
+                    foreach ($_POST['columns'] as $column) {
+                        $row_data[] = $row[$column];
+                    }
+                    fputcsv($output, $row_data);
+                    $sl_no++; // Increment serial number
                 }
+
+                fclose($output);
+                ob_end_flush();
+                exit();
             }
-        } 
+        }
     }
 ?>
+
 <!doctype html>
 <html lang="en">
 	<head>

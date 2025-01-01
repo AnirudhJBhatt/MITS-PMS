@@ -11,6 +11,44 @@
 	?>
 <!---------------- Session Ends form here ------------------------>
 
+<?php
+    if (isset($_POST['download'])) {
+        ob_clean();
+        ob_start();
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=data.csv');
+
+        $output = fopen('php://output', 'w');
+        
+        $Stud_Batch = $_POST['Stud_Batch'];
+        $query ="SELECT c.C_Name, COUNT(p.Stud_ID) AS C_Count, p.P_LPA FROM placement p, company c, student s where p.C_ID=c.C_ID and s.Stud_ID=p.Stud_ID and s.Stud_Year=$Stud_Batch GROUP BY c.C_Name";  
+        $run = mysqli_query($con, $query);
+        
+        if (mysqli_num_rows($run) > 0) {
+            $fields = mysqli_fetch_fields($run);
+            $columns = ['Sl.No']; // Add "Sl.No" to the header
+            foreach ($fields as $field) {
+                $columns[] = $field->name;
+            }
+            fputcsv($output, $columns); // Write the header row
+        }
+
+        $sl_no = 1; // Initialize serial number
+        while ($row = mysqli_fetch_assoc($run)) {
+            $row_data = [$sl_no]; // Start with the serial number
+            foreach ($row as $column_value) {
+                $row_data[] = $column_value;
+            }
+            fputcsv($output, $row_data); // Write the data row
+            $sl_no++; // Increment serial number
+        }
+
+        fclose($output);
+        ob_end_flush();
+        exit(); 
+    }
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -98,6 +136,12 @@
 									}
 								?>
 							</table>
+							<div class="text-center">
+								<form method="POST">
+									<input type="hidden" name="Stud_Batch" value=<?php echo $Stud_Batch ?>>
+									<input type="submit" name="download" value="Download" class="btn btn-success">				
+								</form>									
+							</div>	
 						</section>
 			<?php	
 					}

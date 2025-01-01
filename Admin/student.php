@@ -176,16 +176,13 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label>Batch:</label>
-													<select class="browser-default custom-select" name="Stud_Year" required>
+													<select class="form-control" name="Stud_Year">
 														<option>Select Batch</option>
-														<option value="I">I</option>
-														<option value="II">II</option>
-														<option value="III">III</option>
-														<option value="IV">IV</option>
-														<option value="V">V</option>
-														<option value="VI">VI</option>
-														<option value="VII">VII</option>
-														<option value="VIII">VIII</option>												
+														<?php
+															for($i=2020;$i<=2030;$i++) {
+																echo"<option value=".$i.">".$i."</option>";
+															}
+														?>
 													</select>
 												</div>
 											</div>										
