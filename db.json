@@ -1,8 +1,0 @@
-db.createCollection('order')
-db.insertMany([{id:1,city:'kochi'price:2000}, {id:2,city:'kochi'price:3000}, {id:3,city:'kottayam'price:2500},{id:4,city:'calicut'price:2500},{id:5,city:'calicut'price:5000}])
-
-db.student.aggregate(
-    [
-        {$group:{_id:null,maxage:{$max:'$age'}}}
-    ]
-)
