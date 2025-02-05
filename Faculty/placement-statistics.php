@@ -94,23 +94,27 @@
 						<h5>Application Search</h5>
 					</label>
 					<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
-						
 						<div class="col-12">
 							<select class="form-select" name="Stud_Batch">
 								<option>Select Batch</option>
 								<?php
-									for($i=2020;$i<=2030;$i++) {
-										echo"<option value=".$i.">".$i."</option>";
-									}
+								for ($i = 2020; $i <= 2030; $i++) {
+									$selected = (isset($_POST['Stud_Batch']) && $_POST['Stud_Batch'] == $i) ? 'selected' : '';
+									echo "<option value='$i' $selected>$i</option>";
+								}
 								?>
 							</select>
 						</div>
 						<div class="col-12">
 							<select class="form-select" name="Stud_Course">
 								<option>Select Course</option>
-								<option value="B.Tech">B.Tech</option>
-								<option value="M.Tech">M.Tech</option>
-								<option value="MCA">MCA</option>
+								<?php
+								$courses = ["B.Tech", "M.Tech", "MCA"];
+								foreach ($courses as $course) {
+									$selected = (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == $course) ? 'selected' : '';
+									echo "<option value='$course' $selected>$course</option>";
+								}
+								?>
 							</select>
 						</div>
 						<div class="col-12">
