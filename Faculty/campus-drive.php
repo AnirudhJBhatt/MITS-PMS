@@ -81,13 +81,14 @@
 					<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
 						<div class="col-12">
 							<select class="form-select" name="D_ID">
-								<option>Select Drive</option>
+								<option>Select Job Title</option>
 								<?php
-									$query="SELECT * FROM `drive` WHERE branch LIKE '%$Fac_Dept%';";
-									$run=mysqli_query($con,$query);
-									while($row=mysqli_fetch_array($run)) {
-										echo"<option value=".$row['D_ID'].">".$row['D_Name']."</option>";
-									}
+								$query = "SELECT * FROM drive";
+								$run = mysqli_query($con, $query);
+								while ($row = mysqli_fetch_array($run)) {
+									$selected = (isset($_POST['D_ID']) && $_POST['D_ID'] == $row['D_ID']) ? 'selected' : '';
+									echo "<option value='{$row['D_ID']}' $selected>{$row['D_Name']}</option>";
+								}
 								?>
 							</select>
 						</div>
@@ -132,7 +133,7 @@
 							<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg modal-dialog-centered ">
 									<div class="modal-content">
-										<div class="modal-header bg-info text-white">
+										<div class="modal-header bg-dark text-white">
 											<h1 class="modal-title fs-5" id="exampleModalLabel">Download Data</h1>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>

@@ -11,17 +11,21 @@
 
 <?php
 	$message = "";
-	$account = "";
 if (isset($_POST['submit'])) {
 	$account = $_POST['account'];
 	$user_id = $_POST['user_id'];
-	$que="update login set account='$account' where user_id = '$user_id'";
-	$run=mysqli_query($con,$que);
+	$query="update login set account='$account' where user_id = '$user_id'";
+	$run=mysqli_query($con,$query);
 	if ($run) {
-		$message =  $account == "Activate" ? "Account Activated Successfully" : "Account Deactivated Successfully";
+		if($account=="Activate"){
+			$message='<div class="alert alert-success text-center mt-3" role="alert">Account Activated Successfully!!!</div>';
+		}
+		else{
+			$message='<div class="alert alert-danger text-center mt-3" role="alert">Account Deactivated Successfully!!!</div>';
+		}
 	}	
 	else{
-		$message = "Account Not Activated  Successfully";
+		$message='<div class="alert alert-success text-center mt-3" role="alert">Account not found!!!</div>';
 	}
 }
 ?>
@@ -50,30 +54,28 @@ if (isset($_POST['submit'])) {
 							<div class="col-md-12">
 								<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
 									<div class="col-12">
-										<input type="text" name="user_id" class="form-control" required placeholder="Enter User ID">
+										<input type="text" name="user_id" class="form-control" required placeholder="Enter User ID"
+											value="<?php echo isset($_POST['user_id']) ? htmlspecialchars($_POST['user_id']) : ''; ?>">
 									</div>
 									<div class="col-12">
 										<select name="account" class="form-select">
 											<option>Select Account Status</option>
-											<option value="Activate">Activate</option>
-											<option value="Deactivate">Deactivate</option>
+											<?php
+											$statuses = ["Activate", "Deactivate"];
+											foreach ($statuses as $status) {
+												$selected = (isset($_POST['account']) && $_POST['account'] == $status) ? 'selected' : '';
+												echo "<option value='$status' $selected>$status</option>";
+											}
+											?>
 										</select>
 									</div>
 									<div class="col-12">
 										<input type="submit" class="btn btn-primary px-4 ml-4" name="submit" value="Change">
 									</div>
-								</form>	
+								</form>
 							</div>
 							<div class="col-md-12">
-								<?php
-									if(($account == "Activate" or $account == "Deactivate") and $message==true)
-										$bg_color = "alert-success";
-									else if($message==true)
-										$bg_color = "alert-danger";	
-								?>
-								<h5 class="py-2 pl-3 <?php echo $bg_color; ?>">
-									<?php echo $message ?>
-								</h5>
+								<?php echo $message ?>
 							</div>
 						</div>
 					</div>
@@ -86,7 +88,7 @@ if (isset($_POST['submit'])) {
         <script>
             (() => {
                 'use strict';
-                const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                const tooltipTriggerList = Array.from(document.queryrySelectorAll('[data-bs-toggle="tooltip"]'));
                 tooltipTriggerList.forEach(tooltipTriggerEl => {
                     new bootstrap.Tooltip(tooltipTriggerEl);
                 });

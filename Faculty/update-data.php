@@ -139,9 +139,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							<select class="form-select" name="Stud_Batch">
 								<option>Select Batch</option>
 								<?php
-									for($i=2020;$i<=2030;$i++) {
-										echo"<option value=".$i.">".$i."</option>";
-									}
+								for ($i = 2020; $i <= 2030; $i++) {
+									$selected = (isset($_POST['Stud_Batch']) && $_POST['Stud_Batch'] == $i) ? 'selected' : '';
+									echo "<option value='$i' $selected>$i</option>";
+								}
 								?>
 							</select>
 						</div>

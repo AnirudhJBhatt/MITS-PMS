@@ -68,27 +68,33 @@
 								<select class="form-select" name="Stud_Year">
 									<option>Select Year</option>
 									<?php
-										for($i=2020;$i<=2030;$i++) {
-											echo"<option value=".$i.">".$i."</option>";
-										}
+									for ($i = 2020; $i <= 2030; $i++) {
+										$selected = (isset($_POST['Stud_Year']) && $_POST['Stud_Year'] == $i) ? 'selected' : '';
+										echo "<option value='$i' $selected>$i</option>";
+									}
 									?>
 								</select>
 							</div>
 							<div class="col-12">
 								<select class="form-select" name="Stud_Course">
 									<option>Select Course</option>
-									<option value="B.Tech">B.Tech</option>
-									<option value="M.Tech">M.Tech</option>
-									<option value="MCA">MCA</option>
+									<?php
+									$courses = ["B.Tech", "M.Tech", "MCA"];
+									foreach ($courses as $course) {
+										$selected = (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == $course) ? 'selected' : '';
+										echo "<option value='$course' $selected>$course</option>";
+									}
+									?>
 								</select>
 							</div>
 							<div class="col-12">
-								<input type="number" class="form-control" name="Stud_No" placeholder="No of students">
+								<input type="number" class="form-control" name="Stud_No" placeholder="No of students"
+									value="<?php echo isset($_POST['Stud_No']) ? htmlspecialchars($_POST['Stud_No']) : ''; ?>">
 							</div>
 							<div class="col-12">
 								<input type="submit" class="btn btn-primary px-5" name="Add" value="Add">
 							</div>
-						</form>			
+						</form>
 					</section>
 					<?php 
 						if(isset($_REQUEST['Add'])){

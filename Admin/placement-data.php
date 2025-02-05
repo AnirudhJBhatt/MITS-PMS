@@ -103,32 +103,31 @@
 							<select class="form-select" name="Stud_Batch">
 								<option>Select Batch</option>
 								<?php
-									for($i=2020;$i<=2030;$i++) {
-										echo"<option value=".$i.">".$i."</option>";
-									}
+								for ($i = 2020; $i <= 2030; $i++) {
+									$selected = (isset($_POST['Stud_Batch']) && $_POST['Stud_Batch'] == $i) ? 'selected' : '';
+									echo "<option value='$i' $selected>$i</option>";
+								}
 								?>
 							</select>
 						</div>
 						<div class="col-12">
 							<select class="form-select" name="Stud_Course">
 								<option>Select Course</option>
-								<option value="B.Tech">B.Tech</option>
-								<option value="M.Tech">M.Tech</option>
-								<option value="MCA">MCA</option>
+								<option value="B.Tech" <?php echo (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == "B.Tech") ? 'selected' : ''; ?>>B.Tech</option>
+								<option value="M.Tech" <?php echo (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == "M.Tech") ? 'selected' : ''; ?>>M.Tech</option>
+								<option value="MCA" <?php echo (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == "MCA") ? 'selected' : ''; ?>>MCA</option>
 							</select>
 						</div>
 						<div class="col-12">
 							<select class="form-select" name="Stud_Branch">
 								<option>Select Branch</option>
-								<option value="CS-AI">CS-AI</option>
-								<option value="AI&DS">AI&DS</option>
-								<option value="CS">CS</option>
-								<option value="CS-CY">CS-CY</option>
-								<option value="ME">ME</option>
-								<option value="CE">CE</option>
-								<option value="ECE">ECE</option>
-								<option value="EEE">EEE</option>
-								<option value="Computer Applications">Computer Applications</option>													
+								<?php
+								$branches = ["CS-AI", "AI&DS", "CS", "CS-CY", "ME", "CE", "ECE", "EEE", "Computer Applications"];
+								foreach ($branches as $branch) {
+									$selected = (isset($_POST['Stud_Branch']) && $_POST['Stud_Branch'] == $branch) ? 'selected' : '';
+									echo "<option value='$branch' $selected>$branch</option>";
+								}
+								?>
 							</select>
 						</div>
 						<div class="col-12">

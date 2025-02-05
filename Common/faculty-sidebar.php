@@ -40,7 +40,7 @@
                 </li>
                 <li>
                     <a class="nav-link" href="../Faculty/placement-statistics.php">
-                        <i class="bi bi-graph-up"></i> View Placements
+                        <i class="bi bi-graph-up"></i> Placement Statistics
                     </a>
                 </li>
                 <li>

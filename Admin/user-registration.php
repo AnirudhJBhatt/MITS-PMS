@@ -91,12 +91,13 @@
                 </div>
                 <section class="mt-3">
                     <label>
-                            <h5>Faculty Search</h5>
+                        <h5>Faculty Search</h5>
                     </label>
                     <form action="" method="post">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" name="Fac_Name" class="form-control" placeholder="Enter Faculty Name">
+                                <input type="text" name="Fac_Name" class="form-control" placeholder="Enter Faculty Name"
+                                    value="<?php echo isset($_POST['Fac_Name']) ? htmlspecialchars($_POST['Fac_Name']) : ''; ?>">
                             </div>			
                             <div class="col-5">
                                 <input type="submit" class="btn btn-primary px-4 ml-4" name="Search" value="Search">
@@ -109,7 +110,7 @@
                         <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered ">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-info text-white">
+                                    <div class="modal-header bg-dark text-white">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Student</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
@@ -136,7 +137,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -165,7 +165,7 @@
                                                             <option value="Computer Applications">Computer Applications</option>													
                                                         </select>
                                                     </div>
-                                                </div>										
+                                                </div>							
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Batch:</label>
@@ -196,8 +196,8 @@
                         <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered ">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-info text-white">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel1">Add Student</h1>
+                                    <div class="modal-header bg-dark text-white">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel1">Add Faculty Coordinator</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -259,7 +259,7 @@
                         $Fac_Name=$_POST['Fac_Name'];
                         $query ="SELECT * FROM faculty WHERE Fac_Name LIKE '%$Fac_Name%'";	
                         $run=mysqli_query($con,$query);
-                        if(mysqli_num_rows($run)>0){	
+                        if(mysqli_num_rows($run)>0){
                 ?>
                             <section class="mt-3">
                                 <table class="w-100 table table-bordered table-hover border-dark text-center" cellpadding="10">

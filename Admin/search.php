@@ -35,15 +35,13 @@
 								<div class="input-group">
 									<select class="form-select" name="Stud_Course">
 										<option>Select Batch</option>
-										<option value="CS">CS</option>
-										<option value="CS-AI">CS-AI</option>
-										<option value="AI&DS">AI&DS</option>
-										<option value="CS-CY">CS-CY</option>
-										<option value="ME">ME</option>
-										<option value="CE">CE</option>
-										<option value="EEE">EEE</option>
-										<option value="ECE">ECE</option>	
-										<option value="MCA">MCA</option>													
+										<?php
+											$courses = ["CS", "CS-AI", "AI&DS", "CS-CY", "ME", "CE", "EEE", "ECE", "MCA"];
+											foreach ($courses as $course) {
+												$selected = (isset($_POST['Stud_Course']) && $_POST['Stud_Course'] == $course) ? 'selected' : '';
+												echo "<option value='$course' $selected>$course</option>";
+											}
+										?>
 									</select>
 									<input type="submit" class="btn btn-primary px-4 ml-4" name="deptsearch" value="Search">
 								</div>
@@ -53,13 +51,14 @@
 							</div>
 							<div class="col-5">
 								<div class="input-group">
-									<input type="text" name="Stud_ID" class="form-control" placeholder="Enter Roll no">
+									<input type="text" name="Stud_ID" class="form-control" placeholder="Enter Roll no"
+										value="<?php echo isset($_POST['Stud_ID']) ? htmlspecialchars($_POST['Stud_ID']) : ''; ?>">
 									<input type="submit" class="btn btn-primary px-4 ml-4" name="idsearch" value="Search">
 								</div>
 							</div>
 						</div>
 						<input type="hidden" name="form" value="1">
-					</form>				
+					</form>
 				</section>
 				<?php 
 					if(isset($_REQUEST['form'])){
@@ -74,6 +73,8 @@
 									$Stud_Course=$_POST['Stud_Course'];
 									$query ="SELECT * FROM student WHERE Stud_Course='$Stud_Course'";
 								}
+								$run=mysqli_query($con,$query);	
+								if(mysqli_num_rows($run)>0){
 							?>
 								<section class="mt-3">
 									<table class="w-100 table table-bordered table-hover border-dark mb-5 text-center" cellpadding="10">
@@ -83,8 +84,7 @@
 											<th>Batch</th>
 											<th colspan="1">Operations</th>
 										</tr>
-										<?php			
-											$run=mysqli_query($con,$query);							
+										<?php									
 											while($row=mysqli_fetch_array($run)){		
 										?>
 										<tr>
@@ -104,9 +104,13 @@
 									</table>
 								</section>
 				<?php
-						}						
+								}
+								else{
+									echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
+								}
+							}						
+						}
 					}
-				}
 				?>
 			</div>
         </main>

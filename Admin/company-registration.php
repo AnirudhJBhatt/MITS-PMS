@@ -71,7 +71,8 @@
                     <form action="" method="post">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" name="C_Name" class="form-control" placeholder="Enter Company Name">
+                                <input type="text" name="C_Name" class="form-control" placeholder="Enter Faculty Name"
+                                    value="<?php echo isset($_POST['C_Name']) ? htmlspecialchars($_POST['C_Name']) : ''; ?>">
                             </div>			
                             <div class="col-5">
                                 <input type="submit" class="btn btn-primary px-4 ml-4" name="Search" value="Search">
@@ -84,7 +85,7 @@
                         <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered ">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-info text-white">
+                                    <div class="modal-header bg-dark text-white">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Company</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
@@ -166,42 +167,48 @@
                 <?php
 					if(isset($_POST['Search'])){
 						$C_Name=$_POST['C_Name'];
-						$query ="SELECT * FROM company WHERE C_Name LIKE '%$C_Name%'";				
+						$query ="SELECT * FROM company WHERE C_Name LIKE '%$C_Name%'";
+                        $run=mysqli_query($con,$query);	
+						if(mysqli_num_rows($run)>0){			
 				?>
-						<section class="mt-3">
-                            <table class="w-100 table table-bordered table-hover border-dark text-center">
-                                <tr class="table-dark text-white">
-									<th>Company ID</th>
-									<th>Name</th>
-									<th>Type</th>
-									<th>Address</th>
-									<th colspan="1">Operations</th>
-								</tr>
-								<?php
-									$run=mysqli_query($con,$query);							
-									while($row=mysqli_fetch_array($run)){
-								?>
-								<tr>
-									<td><?php echo $row["C_ID"] ?></td>
-									<td><?php echo $row["C_Name"] ?></td>
-									<td><?php echo $row["C_Type"] ?></td>
-									<td><?php echo $row["C_Address"] ?></td>						
-									<td width='300'>
-									<?php 
-										echo "<a class='btn btn-info' href=display-company.php?C_ID=".$row['C_ID']." target='_blank'>Profile</a> ";
-										echo '<a class="btn btn-danger" href=delete.php?C_ID='.$row['C_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
+							<section class="mt-3">
+								<table class="w-100 table table-bordered table-hover border-dark text-center">
+									<tr class="table-dark text-white">
+										<th>Company ID</th>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Address</th>
+										<th colspan="1">Operations</th>
+									</tr>
+									<?php
+										$run=mysqli_query($con,$query);							
+										while($row=mysqli_fetch_array($run)){
 									?>
-									</td>
-								</tr>
-								<?php		
-									}
-								?>
-							</table>		
-						</section>
+									<tr>
+										<td><?php echo $row["C_ID"] ?></td>
+										<td><?php echo $row["C_Name"] ?></td>
+										<td><?php echo $row["C_Type"] ?></td>
+										<td><?php echo $row["C_Address"] ?></td>						
+										<td width='300'>
+										<?php 
+											echo "<a class='btn btn-info' href=display-company.php?C_ID=".$row['C_ID']." target='_blank'>Profile</a> ";
+											echo '<a class="btn btn-danger" href=delete.php?C_ID='.$row['C_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
+										?>
+										</td>
+									</tr>
+									<?php		
+										}
+									?>
+								</table>		
+							</section>
 				<?php
-					}
-					else{
-				?>
+                        }
+                        else{
+                            echo '<div class="alert alert-danger text-center mt-3" role="alert">No Data Found!</div>';
+                        }
+                    }
+                    else{
+                ?>
 						<div class="row">
 							<div class="col-md-12 container-fluid">
 								<section class="mt-3">	
