@@ -47,6 +47,11 @@ body {
     color: #ffffff;
 }
 
+.nav-link.active {
+    background: #333333;
+    color: #ffffff;
+}
+
 /* Header Styling  starts here */
 
 .header-back {

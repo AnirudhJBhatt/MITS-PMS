@@ -77,23 +77,15 @@
                             <td><?php echo $row['Stud_Address']; ?></td>
                         </tr>
                         <tr>
-                            <th>Caste</th>
-                            <td><?php echo $row['Stud_Caste']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Mother Tongue</th>
-                            <td><?php echo $row['Stud_M_T']; ?></td>
-                        </tr>
-                        <tr>
                             <th>Course</th>
                             <td><?php echo $row['Stud_Course']; ?></td>
                         </tr>
                         <tr>
-                            <th>Batch</th>
+                            <th>Branch</th>
                             <td><?php echo $row['Stud_Batch']; ?></td>
                         </tr>
                         <tr>
-                            <th>Semester</th>
+                            <th>Batch</th>
                             <td><?php echo $row['Stud_Year']; ?></td>
                         </tr>
                         <tr>
@@ -136,10 +128,6 @@
                         <tr>
                             <th>Mobile Number</th>
                             <td><?php echo $row['Stud_Mother_No']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Guardian Email</th>
-                            <td><?php echo $row['Guardian_Email']; ?></td>
                         </tr>
                         <tr>
                             <th>Annual Income</th>

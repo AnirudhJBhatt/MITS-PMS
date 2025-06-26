@@ -36,10 +36,6 @@
 
 		$Stud_Address =$_POST['Stud_Address'];
 
-		$Stud_Caste =$_POST['Stud_Caste'];
-
-		$Stud_M_T =$_POST['Stud_M_T'];
-
 		$Stud_ID_No =$_POST['Stud_ID_No'];
 
 		$Stud_Reg_No =$_POST['Stud_Reg_No'];
@@ -55,8 +51,6 @@
 		$Stud_Mother_Occ =$_POST['Stud_Mother_Occ'];
 
 		$Stud_Mother_No =$_POST['Stud_Mother_No'];
-
-		$Guardian_Email =$_POST['Guardian_Email'];
 
 		$Annual_Income =$_POST['Annual_Income'];
 
@@ -92,31 +86,31 @@
             $Stud_Image = file_get_contents($_FILES['Stud_Image']['tmp_name']);
             $Stud_Image = mysqli_real_escape_string($con, $Stud_Image);
         } else {
-            $Stud_Image = $file1;
+            $Stud_Image = mysqli_real_escape_string($con, $file1);
         }
         
         if (isset($_FILES['Mark_List_10th']) && $_FILES['Mark_List_10th']['error'] == 0) {
             $Mark_List_10th = file_get_contents($_FILES['Mark_List_10th']['tmp_name']);
             $Mark_List_10th = mysqli_real_escape_string($con, $Mark_List_10th);
         } else {
-            $Mark_List_10th = $file2;
+            $Mark_List_10th = mysqli_real_escape_string($con, $file2);
         }
         
         if (isset($_FILES['Mark_List_12th']) && $_FILES['Mark_List_12th']['error'] == 0) {
             $Mark_List_12th = file_get_contents($_FILES['Mark_List_12th']['tmp_name']);
             $Mark_List_12th = mysqli_real_escape_string($con, $Mark_List_12th);
         } else {
-            $Mark_List_12th = $file3;
+            $Mark_List_12th = mysqli_real_escape_string($con, $file3);
         }
         
         if (isset($_FILES['Mark_List_UG']) && $_FILES['Mark_List_UG']['error'] == 0) {
             $Mark_List_UG = file_get_contents($_FILES['Mark_List_UG']['tmp_name']);
             $Mark_List_UG = mysqli_real_escape_string($con, $Mark_List_UG);
         } else {
-            $Mark_List_UG = $file4;
+            $Mark_List_UG = mysqli_real_escape_string($con, $file4);
         } 
 
-        $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_Caste`='$Stud_Caste',`Stud_M_T`='$Stud_M_T',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Guardian_Email`='$Guardian_Email',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
+        $upquery = "UPDATE `student` SET `Stud_Name`='$Stud_Name',`Stud_DOB`='$Stud_DOB',`Stud_Gender`='$Stud_Gender', `Stud_Mob`='$Stud_Mob',`Stud_Email`='$Stud_Email',`Stud_Address`='$Stud_Address',`Stud_ID_No`='$Stud_ID_No',`Stud_Reg_No`='$Stud_Reg_No',`Stud_Father_Name`='$Stud_Father_Name',`Stud_Father_Occ`='$Stud_Father_Occ',`Stud_Father_No`='$Stud_Father_No',`Stud_Mother_Name`='$Stud_Mother_Name',`Stud_Mother_Occ`='$Stud_Mother_Occ',`Stud_Mother_No`='$Stud_Mother_No',`Annual_Income`='$Annual_Income',`UG_Univ`='$UG_Univ',`UG_College`='$UG_College',`UG_Course`='$UG_Course',`Marks_UG`='$Marks_UG',`Marks_UG`='$Marks_UG',`YOP_UG`='$YOP_UG',`YOP_12th`='$YOP_12th',`Board_12th`='$Board_12th',`School_12th`='$School_12th',`Stream_12th`='$Stream_12th',`Marks_12th`='$Marks_12th',`YOP_12th`='$YOP_12th',`Board_10th`='$Board_10th',`School_10th`='$School_10th',`Marks_10th`='$Marks_10th',`YOP_10th`='$YOP_10th',`Stud_Image`='$Stud_Image',`Mark_List_10th`='$Mark_List_10th',`Mark_List_12th`='$Mark_List_12th',`Mark_List_UG`='$Mark_List_UG' WHERE `Stud_ID`='$Stud_ID'";
         
         $run1=mysqli_query($con,$upquery);
 
@@ -124,7 +118,8 @@
             echo "<script>confirm('Record updated'); window.location.href = window.location.href;</script>";
         }
         else {
-            echo "<script>alert('Record not updated');</script>";
+            // echo "<script>alert('Record not updated');</script>";
+            die("MySQL Error: " . mysqli_error($con));
         }
     }
 ?>
@@ -195,16 +190,6 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <label>Caste/Religion</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_Caste']; ?>" name="Stud_Caste">
-                    <div class="error text-danger"></div>
-                </div>
-                <div class="col">
-                    <label>Mother Tongue</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Stud_M_T']; ?>" name="Stud_M_T">
-                    <div class="error text-danger"></div>
-                </div> 
-                <div class="col">
                     <label>Student ID Proof No</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Stud_ID_No']; ?>" name="Stud_ID_No">
                     <div class="error text-danger"></div>
@@ -256,11 +241,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    <label>Guardian Email</label>
-                    <input type="text" class="form-control" value= "<?php echo $row['Guardian_Email']; ?>" name="Guardian_Email">
-                    <div class="error text-danger"></div>
-                </div>
                 <div class="col-sm-4">
                     <label>Annual Income</label>
                     <input type="text" class="form-control" value= "<?php echo $row['Annual_Income']; ?>" name="Annual_Income">
@@ -426,7 +406,7 @@
             }
 
             // Email Validation
-            const emailFields = ["Stud_Email", "Guardian_Email"];
+            const emailFields = ["Stud_Email"];
             for (let field of emailFields) {
                 let inputField = document.querySelector(`input[name="${field}"]`);
                 let email = inputField.value.trim();

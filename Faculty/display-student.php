@@ -76,14 +76,6 @@
                             <td><?php echo $row['Stud_Address']; ?></td>
                         </tr>
                         <tr>
-                            <th>Caste</th>
-                            <td><?php echo $row['Stud_Caste']; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Mother Tongue</th>
-                            <td><?php echo $row['Stud_M_T']; ?></td>
-                        </tr>
-                        <tr>
                             <th>Course</th>
                             <td><?php echo $row['Stud_Course']; ?></td>
                         </tr>
@@ -137,13 +129,47 @@
                             <td><?php echo $row['Stud_Mother_No']; ?></td>
                         </tr>
                         <tr>
-                            <th>Guardian Email</th>
-                            <td><?php echo $row['Guardian_Email']; ?></td>
-                        </tr>
-                        <tr>
                             <th>Annual Income</th>
                             <td><?php echo $row['Annual_Income']; ?></td>
                         </tr>
+                    </table>
+                    <table class="table table-bordered table-hover border-dark border-info">
+                        <tr class="table-dark text-center">
+                            <th colspan="2">Placement Information</th>
+                        </tr>
+                        <tr>
+                            <th>CGPA</th>
+                            <td><?php echo $row['CGPA']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Backlogs</th>
+                            <td><?php echo $row['Stud_Backlogs']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Placement Status</th>
+                            <td><?php echo ($row['Stud_Placement']==1) ? "Yes": "No" ?></td>
+                        </tr>
+                        <?php 
+                            $query1="SELECT * FROM placement p, company c WHERE p.C_ID=c.C_ID AND p.Stud_ID='$Stud_ID'";
+                            $run1 = mysqli_query($con, $query1);
+                            if (mysqli_num_rows($run1) > 0){
+                                $row1 = mysqli_fetch_array($run1);                                
+                        ?>
+                            <tr>
+                                <th>Company Name</th>
+                                <td><?php echo $row1['C_Name']; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Designation</th>
+                                <td><?php echo $row1['C_Desg']; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Package</th>
+                                <td><?php echo $row1['P_LPA']; ?></td>
+                            </tr>
+                        <?php
+                            }
+                        ?>
                     </table>
                 </div>
                 <div class="col">
