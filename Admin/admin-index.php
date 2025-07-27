@@ -1,4 +1,4 @@
- <!---------------- Session starts form here ----------------------->
+<!---------------- Session starts form here ----------------------->
  <?php  
 	session_start();
 	if (!$_SESSION["LoginAdmin"]){
@@ -26,7 +26,6 @@
                         <div class="p-2"><h4>Admin Dashboard</h4></div>
                     </div>
                 </div>
-                <img src="../Images/cdc_mits_logo.png" class="img-fluid mx-auto d-block" height="500" width="500">
             </div>
         </main>
 

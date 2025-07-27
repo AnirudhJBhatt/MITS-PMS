@@ -1,5 +1,12 @@
  <!---------------- Session starts form here ----------------------->
- <?php  
+ <?php 
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\Exception;
+
+	require '../PHPMailer/src/Exception.php';
+	require '../PHPMailer/src/PHPMailer.php';
+	require '../PHPMailer/src/SMTP.php'; 
+
 	session_start();
 	if (!$_SESSION["LoginAdmin"]){
 		echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
@@ -26,12 +33,66 @@
 
 		$query="INSERT INTO `drive`(`D_Name`, `Role`, `Course`, `Branch`, `Year`, `Marks_10th`, `Marks_12th`, `Marks_UG`, `CGPA`, `Backlogs`,`D_Package`, `D_Date`, `C_ID`) VALUES ('$D_Name', '$Role', '$Course', '$Branch', '$Year', '$Marks_10th', '$Marks_12th', '$Marks_UG', '$CGPA', '$Backlogs', '$D_Package' , '$D_Date' , '$C_ID')";
 		$run=mysqli_query($con, $query);
+		// if ($run) {
+		// 	echo "<script>alert('Success'); history.back();</script>";
+ 		// }
+ 		// else {
+		// 	echo $query;
+ 		// }
+
 		if ($run) {
-			echo "<script>alert('Success'); history.back();</script>";
- 		}
- 		else {
-			echo $query;
- 		}
+			// Fetch eligible students
+			$query_students = "SELECT s.Stud_Email FROM student s
+				WHERE FIND_IN_SET(s.Stud_Course, '$Course') > 0 
+				AND FIND_IN_SET(s.Stud_Batch, '$Branch') > 0 
+				AND '$Year' = s.Stud_Year 
+				AND '$Marks_10th' <= s.Marks_10th 
+				AND '$Marks_12th' <= s.Marks_12th 
+				AND (s.Marks_UG <= 0 OR '$Marks_UG' <= s.Marks_UG) 
+				AND '$CGPA' <= s.CGPA 
+				AND '$Backlogs' <= s.Stud_Backlogs 
+				AND '$D_Package' <= s.Stud_Package";
+
+			$result_students = mysqli_query($con, $query_students);
+
+			$mail = new PHPMailer(true);
+			try {
+				// Server settings
+				$mail->isSMTP();
+				$mail->Host       = 'smtp.gmail.com';
+				$mail->SMTPAuth   = true;
+				$mail->Username   = '23mca08@mgits.ac.in'; // Your placement cell email
+				$mail->Password   = 'giigqlmbxoqfpwau'; // App password generated from Google Workspace
+				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+				$mail->Port       = 587;
+
+				// Main sender and primary recipient (could be self)
+				$mail->setFrom('23mca08@mgits.ac.in', 'TPO - MITS');
+				$mail->addAddress('23mca08@mgits.ac.in');
+
+				// Add all eligible students as CC recipients
+				while ($student = mysqli_fetch_assoc($result_students)) {
+					$mail->addCC($student['Stud_Email']);
+				}
+
+				// Email content
+				$mail->isHTML(true);
+				$mail->Subject = "New Campus Drive - $D_Name";
+				$mail->Body    = "
+					<h4>New Campus Drive Alert</h4>
+					<p><strong>Drive Name:</strong> $D_Name</p>
+					<p><strong>Role:</strong> $Role</p>
+					<p><strong>Last Date to Apply:</strong> $D_Date</p>
+				";
+
+				$mail->send();
+				echo "<script>alert('Drive added and email sent via CC!'); history.back();</script>";
+			} catch (Exception $e) {
+				echo("Email failed. Mailer Error: {$mail->ErrorInfo}");
+				// echo "<script>alert('Drive added, but email sending failed.'); history.back();</script>";
+			}
+		}
+
 	}
 ?>
 <!DOCTYPE html>

@@ -81,7 +81,7 @@
 					<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
 						<div class="col-12">
 							<select class="form-select" name="D_ID">
-								<option>Select Job Title</option>
+								<option>Select Drive</option>
 								<?php
 								$query = "SELECT * FROM drive WHERE Branch LIKE '%$Fac_Dept%'";
 								$run = mysqli_query($con, $query);
@@ -217,17 +217,7 @@
 									<td><?php echo $i++; ?></td>
 									<td><?php echo $row['Stud_ID']; ?></td>
 									<td><?php echo $row['Stud_Name']; ?></td>
-									<td>
-										<?php 
-										if (strtolower($row['App_Status']) == 'applied') {
-											echo "<span class='fw-bolder text-success'>Applied</span>";
-										} else {
-											echo "<span class='fw-bolder text-danger'>Not Applied</span>";
-										}
-										?>
-									</td>
-
-									<!-- <td><?php echo $row['App_Status']; ?></td> -->
+									<td><?php echo $row['App_Status']; ?></td>
 								</tr>
 								<?php
 									}
@@ -258,8 +248,12 @@
 									$row=$row=mysqli_fetch_array($run);
 									echo '<tr><th colspan="4">Eligible Students:	'.$row['Stud_Count'].' 	Applied Students:	'.$row['App_Count'].'</th></tr>';
 								?>
-							</table>				
+							</table>
+							<div class="text-center mt-2">
+								<input type="submit" class="btn btn-success px-4 ml-4" name="Search" value="View Appiled Students">
+							</div>				
 						</section>
+					
 				<?php
 					}
 					else{
@@ -267,7 +261,7 @@
 						<section class="my-3">
 							<table class="w-100 table table-bordered border-dark table-hover text-center" cellpadding="5">
 								<tr class="table-dark text-white">
-									<th>SL No</th>
+									<th>Drive ID</th>
 									<th>Drive Name</th>
 									<th>Comapany</th>
 									<th>Batch</th>
@@ -308,11 +302,10 @@
 											GROUP BY d.D_ID";
 									$pack=array("0"=>"Low","1"=>"Medium","2"=>"High");
 									$run=mysqli_query($con,$query);
-									$i=1;
 									while($row=mysqli_fetch_array($run)) {
 										$D_ID=$row['D_ID'];
 										echo "<tr>";
-										echo "<td>".$i++."</td>";
+										echo "<td>".$row['D_ID']."</td>";
 										echo "<td>".$row['D_Name']."</td>";
 										echo "<td>".$row['C_Name']."</td>";
 										echo "<td>".$row['Year']."</td>";

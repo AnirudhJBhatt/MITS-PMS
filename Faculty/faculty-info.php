@@ -86,7 +86,7 @@
             </div>
             <div class='text-center mb-3'>
                 <a class="btn btn-success" href="update-faculty.php?Fac_ID=<?php echo $row['Fac_ID'];?>">Update</a>
-                <a class='btn btn-danger' href="../Faculty/faculty-index.php">Close</a>
+                <a class='btn btn-danger' href="../Faculty/faculty-dashboard.php">Close</a>
             </div>
         </div>
 		<?php include('../Common/footer.php') ?>

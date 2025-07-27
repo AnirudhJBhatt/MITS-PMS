@@ -101,7 +101,7 @@
 					<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
 						<div class="col-12">
 							<select class="form-select" name="Stud_Batch">
-								<option>Select Batch</option>
+								<option>Select Year</option>
 								<?php
 								for ($i = 2020; $i <= 2030; $i++) {
 									$selected = (isset($_POST['Stud_Batch']) && $_POST['Stud_Batch'] == $i) ? 'selected' : '';
@@ -130,10 +130,19 @@
 								?>
 							</select>
 						</div>
+						
 						<div class="col-12">
+							<select class="form-select" name="">
+								<option>Select Band</option>
+								<option value="B.Tech">Low</option>
+								<option value="M.Tech">Medium</option>
+								<option value="MCA">High</option>
+							</select>
+						</div>
+						<div class="col-6">
 							<input type="submit" class="btn btn-primary px-4 ml-4" name="Search1" value="View Students">
 						</div>
-						<div class="col-12">
+						<div class="col-6	">
 							<input type="submit" class="btn btn-primary px-4 ml-4" name="Search2" value="View Placed Students">
 						</div>
 					</form>

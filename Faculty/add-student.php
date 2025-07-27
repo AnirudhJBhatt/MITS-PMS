@@ -18,31 +18,49 @@
 ?>
 <!---------------- Session Ends form here ------------------------>
 <?php
-	if (isset($_POST['records'])) {
-		$records = $_POST['records'];
+	if (isset($_POST['submit_csv'])) {
+		$records = json_decode($_POST['json_data'], true);
 		foreach ($records as $record) {
-			$Stud_ID = mysqli_real_escape_string($con, $record['Stud_ID']);
-			$Stud_Name = mysqli_real_escape_string($con, $record['Stud_Name']);
-			$Stud_Course = mysqli_real_escape_string($con, $record['Stud_Course']);
-			$Stud_Batch = mysqli_real_escape_string($con, $record['Stud_Batch']);
-			$Stud_Year = mysqli_real_escape_string($con, $record['Stud_Year']);
+			$fields = [
+				'Stud_ID', 'Stud_Name', 'Stud_DOB', 'Stud_Gender', 'Stud_Mob', 'Stud_Email', 'Stud_Address',
+				'Stud_Course', 'Stud_Batch', 'Stud_Year', 'Stud_Reg_No', 'CGPA', 'Stud_Backlogs',
+				'Stud_Father_Name', 'Stud_Father_No', 'Stud_Mother_Name', 'Stud_Mother_No',
+				'Board_10th', 'School_10th', 'YOP_10th', 'Marks_10th',
+				'Board_12th', 'School_12th', 'Stream_12th', 'YOP_12th', 'Marks_12th',
+				'UG_Univ', 'UG_College', 'UG_Course', 'YOP_UG', 'Marks_UG'
+			];
 
-			$query1= "INSERT INTO student (`Stud_ID`, `Stud_Name`,`Stud_Course`, `Stud_Batch`,`Stud_Year`) VALUES ('$Stud_ID', '$Stud_Name','$Stud_Course','$Stud_Batch', '$Stud_Year')";
-			echo $query1;
-			$query2="INSERT INTO `login`(`user_id`, `Password`, `Role`, `account`) VALUES ('$Stud_ID','Student123*','Student','Activate')";
-			
-			$run1=mysqli_query($con, $query1);
-			$run2=mysqli_query($con, $query2);
-		}
+			$escaped = [];
+			foreach ($fields as $field) {
+				if (!isset($record[$field])) {
+					echo("Missing field: $field");  // Log the missing field name to PHP error log
+				}
 
-		if ($run1 && $run2) {
-			echo "<script>alert('Success'); window.location='add-student.php';</script>";
+				$value = isset($record[$field]) ? $record[$field] : "";  // Fallback to empty string
+				$escaped[$field] = mysqli_real_escape_string($con, $value);
 			}
-		else {
-			echo "<script>alert('Failed'); window.location = 'add-student.php';</script>";
+
+			$columns = implode(", ", array_map(fn($f) => "`$f`", array_keys($escaped)));
+			$values = implode(", ", array_map(fn($v) => "'$v'", array_values($escaped)));
+
+			$query1 = "INSERT INTO student ($columns) VALUES ($values)";
+			
+			$query2 = "INSERT INTO login (`user_id`, `Password`, `Role`, `account`) 
+					VALUES ('{$escaped['Stud_ID']}', 'Student123*', 'Student', 'Activate')";
+
+			$run1 = mysqli_query($con, $query1);
+			$run2 = mysqli_query($con, $query2);
+
+			if ($run1 && $run2) {
+				echo "<script>alert('Success'); window.location='add-student.php';</script>";
+			} else {
+				echo "<script>alert('Failed'); window.location = 'add-student.php';</script>";
+			}
 		}
+
 	}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,9 +81,9 @@
                 </div>
 				<div class="container">
 					<section>			
-						<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
+						<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post" enctype="multipart/form-data">
 							<div class="col-12">
-								<select class="form-select" name="Stud_Year">
+								<select class="form-select" name="Stud_Year" required>
 									<option>Select Year</option>
 									<?php
 									for ($i = 2020; $i <= 2030; $i++) {
@@ -76,7 +94,7 @@
 								</select>
 							</div>
 							<div class="col-12">
-								<select class="form-select" name="Stud_Course">
+								<select class="form-select" name="Stud_Course" required>
 									<option>Select Course</option>
 									<?php
 									$courses = ["B.Tech", "M.Tech", "MCA"];
@@ -88,22 +106,72 @@
 								</select>
 							</div>
 							<div class="col-12">
-								<input type="number" class="form-control" name="Stud_No" placeholder="No of students"
-									value="<?php echo isset($_POST['Stud_No']) ? htmlspecialchars($_POST['Stud_No']) : ''; ?>">
+								<input type="file" class="form-control" name="csv_file" accept=".csv" required>
 							</div>
 							<div class="col-12">
 								<input type="submit" class="btn btn-primary px-5" name="Add" value="Add">
 							</div>
 						</form>
+						<p class="text-muted mt-2">* CSV should have columns: Stud_ID, Stud_Name, Stud_Course, Stud_Batch, Stud_Year</p>
 					</section>
 					<?php 
-						if(isset($_REQUEST['Add'])){
-							$Stud_Year=$_POST['Stud_Year'];
-							$Stud_Course=$_POST['Stud_Course'];
-							$Stud_No=$_POST['Stud_No'];
+						if(isset($_POST['Add'])) {
+							$Stud_Year = $_POST['Stud_Year'];
+							$Stud_Course = $_POST['Stud_Course'];
+							$Fac_Dept = $row['Fac_Dept']; // already retrieved in your session block
+							$students = [];
+
+							if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
+								$file = $_FILES['csv_file']['tmp_name'];
+								if (($handle = fopen($file, "r")) !== FALSE) {
+									$isHeader = true;
+									while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+										if ($isHeader) {
+											$isHeader = false;
+											continue;
+										}
+										
+										$students[] = [
+											'Stud_ID'           => $data[0],
+											'Stud_Name'         => $data[1],
+											'Stud_DOB'          => $data[2],
+											'Stud_Gender'       => $data[3],
+											'Stud_Mob'          => $data[4],
+											'Stud_Email'        => $data[5],
+											'Stud_Address'      => $data[6],
+											'Stud_Course'       => $Stud_Course, 
+											'Stud_Batch'        => $Fac_Dept, 
+											'Stud_Year'         => $Stud_Year, 
+											'Stud_Reg_No'       => $data[10],
+											'CGPA'              => $data[11],
+											'Stud_Backlogs'     => $data[12],
+											'Stud_Father_Name'  => $data[13],
+											'Stud_Father_No'    => $data[14],
+											'Stud_Mother_Name'  => $data[15],
+											'Stud_Mother_No'    => $data[16],
+											'Board_10th'        => $data[17],
+											'School_10th'       => $data[18],
+											'YOP_10th'          => $data[19],
+											'Marks_10th'        => $data[20],
+											'Board_12th'        => $data[21],
+											'School_12th'       => $data[22],
+											'Stream_12th'       => $data[23],
+											'YOP_12th'          => $data[24],
+											'Marks_12th'        => $data[25],
+											'UG_Univ'           => $data[26],
+											'UG_College'        => $data[27],
+											'UG_Course'         => $data[28],
+											'YOP_UG'            => $data[29],
+											'Marks_UG'          => $data[30],
+										];
+									}
+									fclose($handle);
+								}
+							}
 					?>
 							<section class="mt-3">
 								<form method="POST">
+									<input type="hidden" name="json_data" value='<?= json_encode($students, JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
 									<table class="w-100 table table-bordered border-dark table-hover text-center" cellpadding="5">
 										<tr class="table-dark text-white">
 											<th>Roll No</th>
@@ -113,26 +181,21 @@
 											<th>Department</th>
 											<th>Year</th>
 										</tr>
-										<?php
-										for($i=1;$i<=$Stud_No;$i++){
-										?>
+										<?php foreach ($students as $i => $student): ?>
 											<tr>
-												<td><?php echo $i ?></td>
-												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_ID]" required></td>
-												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_Name]" required></td>
-												<td><input type="text" class="form-control" value= "<?php echo $Stud_Course ?>" name="records[<?= $i ?>][Stud_Course]" readonly></td>
-												<td><input type="text" class="form-control" value= "<?php echo $Fac_Dept ?>" name="records[<?= $i ?>][Stud_Batch]" readonly></td>
-												<td><input type="text" class="form-control" value= "<?php echo $Stud_Year ?>" name="records[<?= $i ?>][Stud_Year]" readonly></td>
+												<td><?= $i + 1 ?></td>
+												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_ID]" value="<?= $student['Stud_ID'] ?>" readonly></td>
+												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_Name]" value="<?= $student['Stud_Name'] ?>" readonly></td>
+												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_Course]" value="<?= $student['Stud_Course'] ?>" readonly></td>
+												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_Batch]" value="<?= $student['Stud_Batch'] ?>" readonly></td>
+												<td><input type="text" class="form-control" name="records[<?= $i ?>][Stud_Year]" value="<?= $student['Stud_Year'] ?>" readonly></td>
 											</tr>
-										
-										<?php	
-										}
-										?>
+										<?php endforeach; ?>
 									</table>
 									<div class="text-center mb-5">
-										<input type="submit" value="Add Students" class="btn btn-success">				
+										<input type="submit" name="submit_csv" value="Add Students" class="btn btn-success">				
 									</div>
-								</form>				
+								</form>
 							</section>
 						<?php				
 							}

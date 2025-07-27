@@ -1,7 +1,7 @@
 <div class="sidebar border-end">
             <div class="sidebar-header">
                 <div class="nav-item">
-                    <a class="nav-link text-white" href="../Faculty/faculty-index.php">
+                    <a class="nav-link text-white" href="../Faculty/faculty-dashboard.php">
                         <span class="home"></span>
                         <i class="bi bi-house-door" aria-hidden="true"></i> Dashboard 
                     </a>

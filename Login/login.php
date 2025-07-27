@@ -127,12 +127,12 @@
                 if ($row["Role"]=="Admin")
                 {
                     $_SESSION['LoginAdmin']=$row["ID"];
-                    header('Location: ../admin/admin-index.php');
+                    header('Location: ../admin/admin-dashboard.php');
                 }
                 else if ($row["Role"]=="Faculty" and $row["account"]=="Activate")
                 {
                     $_SESSION['LoginFaculty']=$row['user_id'];
-                    header('Location: ../faculty/faculty-index.php');
+                    header('Location: ../faculty/faculty-dashboard.php');
                 }
                 else if ($row["Role"]=="Company" and $row["account"]=="Activate")
                 {

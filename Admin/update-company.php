@@ -41,8 +41,6 @@ if(isset($_POST['update'])){
 
     $C_Phone =$_POST['C_Phone'];
 
-    $C_ID_No =$_POST['C_ID_No'];
-
     $C_Person =$_POST['C_Person'];
 
     $C_Website =$_POST['C_Website'];

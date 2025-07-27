@@ -71,7 +71,7 @@
                     <form action="" method="post">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" name="C_Name" class="form-control" placeholder="Enter Faculty Name"
+                                <input type="text" name="C_Name" class="form-control" placeholder="Enter Company Name"
                                     value="<?php echo isset($_POST['C_Name']) ? htmlspecialchars($_POST['C_Name']) : ''; ?>">
                             </div>			
                             <div class="col-5">
@@ -192,7 +192,8 @@
 										<td width='300'>
 										<?php 
 											echo "<a class='btn btn-info' href=display-company.php?C_ID=".$row['C_ID']." target='_blank'>Profile</a> ";
-											echo '<a class="btn btn-danger" href=delete.php?C_ID='.$row['C_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
+											echo " <a class='btn btn-primary' href=update-company.php?C_ID=".$row['C_ID']." target='_blank'>Update</a>";
+											echo ' <a class="btn btn-danger" href=delete.php?C_ID='.$row['C_ID'].' onClick="return confirm(\'Do you want to delete ?\')">Delete</a>';
 										?>
 										</td>
 									</tr>

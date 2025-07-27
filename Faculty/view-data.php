@@ -20,14 +20,18 @@
 
 <?php
     if (isset($_POST['download1'])) {
-        ob_clean();
-        ob_start();
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=data.csv');
+        $Stud_Course = $_POST['Stud_Course'];
+        $Stud_Batch = $_POST['Stud_Year'];
+		$filename = $Stud_Course."_".$Stud_Batch."_Batch_Data.csv";
+
+		ob_clean();
+		ob_start();
+		header('Content-Type: text/csv; charset=utf-8');
+		header("Content-Disposition: attachment; filename=\"$filename\"");
 
         $output = fopen('php://output', 'w');
-        $Stud_Year = $_POST['Stud_Year'];
-        $query = "SELECT * FROM student WHERE Stud_Batch='$Fac_Dept' and Stud_Year='$Stud_Year'";
+		
+        $query = "SELECT Stud_ID, Stud_Name, Stud_DOB, Stud_Gender, Stud_Mob, Stud_Email, Stud_Address, Stud_Course, Stud_Batch, Stud_ID_No, Stud_Reg_No, Stud_Father_Name, Stud_Father_Occ, Stud_Father_No, Stud_Mother_Name, Stud_Mother_Occ, Stud_Mother_No, Annual_Income, UG_Univ, UG_College, UG_Course, YOP_UG, Marks_UG, Board_12th, School_12th, Stream_12th, YOP_12th, Marks_12th, Board_10th, School_10th, YOP_10th, Marks_10th, CGPA, Stud_Backlogs, Stud_Year FROM student WHERE Stud_Batch='$Fac_Dept' and Stud_Year='$Stud_Year'";
         $run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($run) > 0) {
@@ -181,6 +185,7 @@
 								<div class="text-center mt-2">
 									<form method="POST">
 										<input type="hidden" name="Stud_Year" value=<?php echo $Stud_Batch ?>>
+										<input type="hidden" name="Stud_Course" value=<?php echo $Stud_Course ?>>
 										<input type="submit" name="download1" value="Download" class="btn btn-success">				
 									</form>									
 								</div>				
