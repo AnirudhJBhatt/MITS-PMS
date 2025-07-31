@@ -31,11 +31,11 @@
                         <i class="bi bi-person-lines-fill"></i> Drive Applicants
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="nav-link <?= ($current_page == 'quizes.php') ? 'active' : ''; ?>" href="../Admin/quizes.php">
                         <i class="bi bi-gear-fill"></i> Add Exam
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a class="nav-link <?= ($current_page == 'placement-data.php') ? 'active' : ''; ?>" href="../Admin/placement-data.php">
                         <i class="bi bi-info-circle"></i> View Placement Data

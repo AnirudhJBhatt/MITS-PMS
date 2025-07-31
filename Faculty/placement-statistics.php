@@ -90,9 +90,6 @@
 					</div>
 				</div>
 				<section class="mt-3">
-					<label>
-						<h5>Application Search</h5>
-					</label>
 					<form class="row row-cols-lg-auto g-3 align-items-center" action="" method="post">
 						<div class="col-12">
 							<select class="form-select" name="Stud_Batch">

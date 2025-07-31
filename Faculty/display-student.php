@@ -1,21 +1,20 @@
 <!---------------- Session starts form here ----------------------->
 <?php  
-   session_start();
-   if (!$_SESSION["LoginFaculty"]){
-       echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
-       echo '<script>window.location="../login/login.php"</script>';
-   }
-   
-   require_once "../connection/connection.php";
+    session_start();
+    if (!$_SESSION["LoginFaculty"]){
+        echo '<script> alert("Your Are Not Authorize Person For This link");</script>';
+        echo '<script>window.location="../login/login.php"</script>';
+    }
+    
+    require_once "../connection/connection.php";
 
-   $Stud_ID = $_REQUEST['Stud_ID'];
-   $query = "SELECT * FROM `student` WHERE `Stud_ID` = '$Stud_ID' ";      
-   $run = mysqli_query($con, $query);       
-   $row = mysqli_fetch_array($run);
-   
-   $imageData = $row['Stud_Image'];
-   $base64Image = base64_encode($imageData);
-   $imageSrc = 'data:image/jpeg;base64,' . $base64Image;
+    $Stud_ID = $_REQUEST['Stud_ID'];
+    $query = "SELECT * FROM `student` WHERE `Stud_ID` = '$Stud_ID' ";      
+    $run = mysqli_query($con, $query);       
+    $row = mysqli_fetch_array($run);
+    $imageData = $row['Stud_Image'];
+    $base64Image = base64_encode($imageData);
+    $imageSrc = 'data:image/jpeg;base64,' . $base64Image;
 ?>
 <!---------------- Session Ends form here ------------------------>
 

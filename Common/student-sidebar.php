@@ -21,11 +21,11 @@
                         <i class="bi bi-building"></i> Campus Drives
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="nav-link <?= ($current_page == 'student-exams.php') ? 'active' : ''; ?>" href="../Student/student-exams.php">
                         <i class="bi bi-building"></i> Exam
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a class="nav-link <?= ($current_page == 'student-applications.php') ? 'active' : ''; ?>" href="../Student/student-applications.php">
                         <i class="bi bi-clock"></i> Applications

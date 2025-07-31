@@ -1,3 +1,22 @@
+<?php
+    if (isset($_SESSION["LoginAdmin"])) {
+        $userid = $_SESSION["LoginAdmin"];
+        $username = "MITS Placement Cell";
+    } elseif (isset($_SESSION["LoginFaculty"])) {
+        $Fac_ID=$_SESSION['LoginFaculty'];
+        $query = "SELECT * FROM `faculty` WHERE `Fac_ID` = '$Fac_ID' ";
+        $run = mysqli_query($con, $query);
+        $res = mysqli_fetch_array($run);
+        $username = $res['Fac_Name'];
+    } elseif (isset($_SESSION["LoginStudent"])) {
+        $Stud_ID=$_SESSION['LoginStudent'];
+	    $query = "SELECT * FROM `student` WHERE `Stud_ID` = '$Stud_ID' ";
+        $run = mysqli_query($con, $query);
+        $res = mysqli_fetch_array($run);
+        $username = $res['Stud_Name'];
+    }
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,13 +41,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item d-flex align-items-center me-3">
+                    <span class="nav-link text-light text-uppercase disabled">
+                        <?php echo $username; ?>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn" href="../login/logout.php">
+                        <i class="bi bi-power" aria-hidden="true"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link btn" href="../login/logout.php">
                         <i class="bi bi-power" aria-hidden="true"></i>  Logout
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </nav>
 </body>
 </html>

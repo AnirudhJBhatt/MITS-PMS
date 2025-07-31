@@ -30,6 +30,16 @@
     $placed_row = mysqli_fetch_array($placed_query);
     $total_placed = $placed_row['placed_students'];
 
+    // Branch-wise placement query (use your table/column names)
+    $branch_query = mysqli_query($con,"SELECT s.Stud_Batch AS branch, COUNT(*) AS placed_count FROM placement p JOIN student s ON p.Stud_ID = s.Stud_ID GROUP BY s.Stud_Batch");
+    $branch_labels = [];
+    $branch_counts = [];
+
+    while ($row = mysqli_fetch_assoc($branch_query)) {
+        $branch_labels[] = $row['branch'];
+        $branch_counts[] = $row['placed_count'];
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +50,7 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body>
     <?php include('../Common/header.php'); ?>
@@ -108,12 +119,12 @@
                         <canvas id="placementSummaryChart" height="250"></canvas>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <!-- <div class="col-md-5">
                     <div class="card p-3 shadow-sm">
                         <h5 class="text-center">Placement Status</h5>
                         <canvas id="placementChart" height="250"></canvas>
                     </div> 
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
@@ -136,10 +147,49 @@
                 responsive: true,
                 plugins: {
                     legend: { display: false },
-                    title: { display: true, text: 'Branch Wise Placement Summary' }
+                    title: { display: true, text: 'Branch Wise Placement Summary' },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        color: '#000',
+                        font: { weight: 'bold' },
+                        formatter: (value) => value + '%'
+                    }
                 }
-            }
-        });
+            },
+            plugins: [ChartDataLabels]
+        });   
+        
+        // const branchLabels = <?php echo json_encode($branch_labels); ?>;
+        // const branchData   = <?php echo json_encode($branch_counts); ?>;
+
+        // const applicationsChart = new Chart(document.getElementById('applicationsChart'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: branchLabels,
+        //         datasets: [{
+        //             label: 'Placed',
+        //             data: branchData,
+        //             backgroundColor: 'rgba(54, 162, 235, 0.7)',
+        //             borderRadius: 5
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: { display: false },
+        //             title: { display: true, text: 'Branch Wise Placement Summary' },
+        //             datalabels: {
+        //                 anchor: 'end',
+        //                 align: 'top',
+        //                 color: '#000',
+        //                 font: { weight: 'bold' },
+        //                 formatter: (value) => value // raw values
+        //             }
+        //         }
+        //     },
+        //     plugins: [ChartDataLabels]
+        // });
 
         const placementChart = new Chart(document.getElementById('placementChart'), {
             type: 'pie',
