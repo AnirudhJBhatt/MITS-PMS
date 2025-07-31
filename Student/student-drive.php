@@ -71,13 +71,16 @@
 									<td><?php echo $row['CGPA']; ?></td>
 									<td><?php echo $row['D_Date']; ?></td>
 									<td width='200'>
-										<?php if (in_array($D_ID, $applied_jobs)) { ?>
-											<button class="btn btn-secondary" disabled>Applied</button>
-										<?php 
-										} else { ?>
-											<a class="btn btn-success" href="apply.php?D_ID=<?php echo $row['D_ID']; ?>">Apply</a>
-										<?php	
-										} ?>
+										<?php
+											$isExpired = strtotime($row['D_Date']) < strtotime(date('Y-m-d'));
+											if (in_array($D_ID, $applied_jobs)) {
+												echo '<button class="btn btn-secondary" disabled>Applied</button>';
+											} elseif ($isExpired) {
+												echo '<button class="btn btn-danger" disabled>Expired</button>';
+											} else {
+												echo '<a class="btn btn-success" href="apply.php?D_ID=' . $row['D_ID'] . '">Apply</a>';
+											}
+										?>
 									</td>
 								</tr>
 								<?php

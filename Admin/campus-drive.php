@@ -205,7 +205,7 @@
 								</div>
 								<div class="col-md-6">
 									<label>Last Date</label>
-									<input type="month" name="D_Year" class="form-control">
+									<input type="date" name="D_Year" class="form-control">
 								</div>
 							</div>						
 							<div class="row mt-3">
